@@ -53,4 +53,9 @@ monitor quit # quits QEMU
 
 - `*.S`: CHERI assembly programs placed in ~/cheri/
 
+  # For Academic Use
+  This setup was developed as part of a computer science bachelor project at Copenhagen University to study CHERI's hardware-enforced memory safety. It provides a platform for testing capability behavior and write simple cheri-enabled assembly programs to be tested.
+
+
+
 
