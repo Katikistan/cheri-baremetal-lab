@@ -2,9 +2,9 @@
 This repository contains minimal CHERI-RISCV32 assembly programs along with a build system for running and debugging them on a bare-metal QEMU. Inteded for experimenting with CHERI's capability model.
 
 ## Setup
-To build and run programs, you will need the CHERI toolchain provided via [cheribuild](https://github.com/CTSRD-CHERI/cheribuild):
+To build and run programs, you will need the CHERI toolchain provided via [cheribuild](https://github.com/CTSRD-CHERI/cheribuild)
 
-We make use of the cheri qemu, llvm and gdb implementations. Follow instructions on cheribuild README. The following commnands was used to build the needed tools:
+We make use of the Cheri qemu, llvm and gdb implementations. Follow instructions on cheribuild README. The following commnands was used to build the needed tools:
 ```bash
 ./cheribuild.py qemu
 ./cheribuild.py llvm
