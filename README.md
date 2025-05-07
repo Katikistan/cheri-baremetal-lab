@@ -31,7 +31,7 @@ Binaries are run on CHERI-QEMU in bare-metal mode to observe CHERI instruction b
 
 GDB is used to step through instructions and inspect capability register state.
 
-# gdb
+## gdb
 To start gdb:
 ```
 make gdb PROGRAM=test
@@ -53,7 +53,7 @@ monitor quit # quits QEMU
 
 - `*.S`: CHERI assembly programs placed in ~/cheri/
 
-  # For Academic Use
+## Academic Use
   This setup was developed as part of a computer science bachelor project at Copenhagen University to study CHERI's hardware-enforced memory safety. It provides a platform for testing capability behavior and write simple cheri-enabled assembly programs to be tested.
 
 
