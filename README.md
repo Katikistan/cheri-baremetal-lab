@@ -6,18 +6,24 @@ To build and run programs, you will need the CHERI toolchain provided via [cheri
 
 We make use of the Cheri qemu, llvm and gdb implementations. Follow instructions on cheribuild README. The following commnands was used to build the needed tools:
 ```bash
-./cheribuild.py qemu
-./cheribuild.py llvm
-./cheribuild.py gdb-native
+./cheribuild.py qemu -d
+./cheribuild.py llvm -d 
+./cheribuild.py gdb-native -d 
 ````
+Cheribuild had some issues building on mac. 
 
 ## Building and Running
-Assembly programs should be placed in ~/cheri/PROGRAM.S, which will be created when using cheribuild. The Makefile include the following build targets:
+Assembly programs should be placed in `~/cheri/PROGRAM.S`, the cheri folder will be created when using cheribuild. 
+
+**After cloning this repo move Makefile and linker script into `~/cheri`**
+
+The Makefile include the following build targets:
 ```
-make PROGRAM=test           # Builds test.elf from ~/cheri/test.S
-make run PROGRAM=test       # Runs test.elf in QEMU (default: 1 core, kernel mode)
-make run PROGRAM=test CORES=2  # Run with 2 cores
-make gdb PROGRAM=test       # Starts GDB on test.elf
+make build TARGET=test               # CHERI build
+make build CHERI=0 TARGET=test       # Non-CHERI build
+make run                             # CHERI, kernel mode
+make run MODE=bios CHERI=0           # Non-CHERI, BIOS mode
+make gdb TARGET=test                 
 make clean                
 ```
 **Optional flags:**
@@ -36,17 +42,17 @@ To start gdb:
 ```
 make gdb PROGRAM=test
 ```
-QEMU opens a port at `1234` that we can target with out gdb stub. QEMU has some issues setting the pc to the proper address therefore we set it manually in gdb
+Launching QEMU with the -s makes QEMU start a GDB server listening on TCP port 1234 on localhost. Use `target remote :1234` to connect to QEMU using gdb. QEMU has some issues setting the PC to the proper address therefore we set it manually in gdb.
 ```
-target remote :1234
-set $pc = 0x80000000
+target remote :1234 # connect to QEMU
+set $pc = 0x80000000 # set PC to where instructions start
 stepi # next instruction
-info registers
-info reg t0
-print $ct0
+info registers # gives info on all registers
+info reg t0 # info on given register
+print $ct0 # prints the value of the CHERI capability register ct0
 monitor quit # quits QEMU
 ```
-
+## Included files
 - `Makefile`: Build system supporting CHERI/non-CHERI and BIOS/kernel modes
 
 - `linker.ld`: Bare-metal memory layout for ELF and binary generation
@@ -54,7 +60,7 @@ monitor quit # quits QEMU
 - `*.S`: CHERI assembly programs placed in ~/cheri/
 
 ## Academic Use
-  This setup was developed as part of a computer science bachelor project at Copenhagen University to study CHERI's hardware-enforced memory safety. It provides a platform for testing capability behavior and write simple cheri-enabled assembly programs to be tested.
+This setup was developed as part of a computer science bachelor project at Copenhagen University to study CHERI's hardware-enforced memory safety. It provides a platform for testing capability behavior and write simple cheri-enabled assembly programs to be tested on bare-metal QEMU.
 
 
 
