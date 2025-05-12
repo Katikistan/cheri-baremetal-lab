@@ -22,13 +22,11 @@ The Makefile include the following build targets:
 make build TARGET=test               # CHERI build
 make build CHERI=0 TARGET=test       # Non-CHERI build
 make run                             # CHERI, kernel mode
-make run MODE=bios CHERI=0           # Non-CHERI, BIOS mode
+make run  CHERI=0                    # Non-CHERI
 make gdb TARGET=test                 
 make clean                
 ```
 **Optional flags:**
-`MODE=bios`: run using -bios
-
 `CHERI=0`: build for baseline RISC-V32 (no CHERI)
 
 Programs are assembled and linked using CHERI Clang and a custom linker script targeting 0x80000000. 
