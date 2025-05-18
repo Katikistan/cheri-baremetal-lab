@@ -1,6 +1,18 @@
 # Cheri Baremetal Lab
 This repository contains minimal CHERI-RISCV32 assembly programs and a build system for running and debugging them on bare-metal QEMU. Intended for experimenting with CHERI's capability model. We have tested the CTSRD-CHERI and CHERI-Alliance toolchains 
+## CTSRD-CHERI Toolchain
+Developed by the CTSRD project (Cambridge, SRI International, and others)
 
+[CTSRD-CHERI github](https://github.com/CTSRD-CHERI)
+
+Uses [CHERI ISAv9](https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-987.pdf), see chapter 7 for the CHERI-RISC-V instruction-set.
+
+## CHERI-Alliance Toolchain
+Developed by Codasip in collaboration with CHERI teams at Cambridge
+
+[CHERI Alliance github](https://github.com/CTSRD-CHERI)
+
+Uses the [RISC-V CHERI specification v0.9.3](https://github.com/riscv/riscv-cheri/releases/tag/v0.9.3-prerelease)
 ## Setup
 ### CTSRD-CHERI Toolchain
 To build and run programs, you will need the CHERI toolchain provided via [cheribuild](https://github.com/CTSRD-CHERI/cheribuild).
@@ -17,7 +29,7 @@ Note: Cheribuild may have issues on macOS. Tools are installed under `~/cheri`.
 Install required build tools and libraries.
 ```
 sudo apt update
-sudo apt install -y build-essential autoconf automake libtool pkg-config clang bison cmake mercurial ninja-build flex texinfo time libglib2.0-dev libpixman-1-dev libarchive-dev libbz2-dev libattr1-dev libcap-ng-dev libexpat1-dev libgmp-dev libncurses-dev bc
+sudo apt install -y build-essential autoconf automake libtool pkg-config clang bison cmake mercurial ninja-build flex texinfo time samba libglib2.0-dev libpixman-1-dev libarchive-dev libarchive-tools libbz2-dev libattr1-dev libcap-ng-dev libexpat1-dev libgmp-dev libncurses-dev bc
 ```
 #### QEMU
 Clone the CHERI Alliance QEMU repo:
@@ -33,6 +45,8 @@ mkdir build && cd build
 make -j$(nproc)
 sudo make install
 ```
+
+Uses the [RISC-V CHERI specification v0.9.3](https://github.com/riscv/riscv-cheri/releases/tag/v0.9.3-prerelease)
 #### LLVM
 Clone the CHERI Alliance LLVM repo:
 ```
@@ -53,6 +67,9 @@ ninja
 sudo ninja install   
 ```
 make had some issues so we used ninja for llvm, we ended up placing LLVM in /opt/codasip-llvm to verify it was installed correctly.
+
+We assume that it uses the [RISC-V CHERI specification v0.9.3](https://github.com/riscv/riscv-cheri/releases/tag/v0.9.3-prerelease)
+No information is given on the github repo README
 #### GDB
 Clone the CHERI Alliance GDB repo:
 ```
@@ -75,7 +92,7 @@ The two toolchains use different instructions so we seperated programs written f
 
 The Makefile provides the following targets:
 
-```bash
+```
 make build TARGET=test               # Build a program (CHERI by default, use CHERI=0 for baseline)
 make run TARGET=test                 # Build and run a CHERI program in QEMU
 make gdb TARGET=test                 # Start GDB with a CHERI-enabled binary
@@ -93,7 +110,7 @@ All programs are assembled with CHERI Clang using a custom linker script targeti
 
 Start GDB for a target with:
 
-```bash
+```
 make gdb TARGET=test
 ```
 
@@ -120,9 +137,10 @@ thread apply all info reg # Show registers for all threads
 ## File Structure
 
 * `Makefile`: Build automation for CHERI/non-CHERI and BIOS/kernel modes
+* `README`: The file you are currently reading
 * `linker.ld`: Linker script targeting bare-metal memory at `0x80000000`
-* `bios.S`: Bootloader used in BIOS mode
-* `programs/*.S`: Assembly source files to be tested
+* `codasip/*.S`: CHERI-alliance Assembly source files to be tested
+* `cambridge/*.S`: CTSRD Assembly source files to be tested
 
 ## Academic Use
 
