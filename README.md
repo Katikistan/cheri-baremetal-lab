@@ -1,78 +1,129 @@
 # Cheri Baremetal Lab
-This repository contains minimal CHERI-RISCV32 assembly programs along with a build system for running and debugging them on a bare-metal QEMU. Inteded for experimenting with CHERI's capability model.
+This repository contains minimal CHERI-RISCV32 assembly programs and a build system for running and debugging them on bare-metal QEMU. Intended for experimenting with CHERI's capability model. We have tested the CTSRD-CHERI and CHERI-Alliance toolchains 
 
 ## Setup
-To build and run programs, you will need the CHERI toolchain provided via [cheribuild](https://github.com/CTSRD-CHERI/cheribuild)
+### CTSRD-CHERI Toolchain
+To build and run programs, you will need the CHERI toolchain provided via [cheribuild](https://github.com/CTSRD-CHERI/cheribuild).
 
-We make use of the Cheri qemu, llvm and gdb implementations. Follow instructions on cheribuild README. The following commnands was used to build the needed tools:
-```bash
+We use the CHERI versions of QEMU, LLVM, and GDB. Build them with:
+```
 ./cheribuild.py qemu -d
 ./cheribuild.py llvm -d 
 ./cheribuild.py gdb-native -d 
-````
-Cheribuild had some issues building on mac. 
+```
 
+Note: Cheribuild may have issues on macOS. Tools are installed under `~/cheri`.
+### CHERI-Alliance Toolchain
+Install required build tools and libraries.
+```
+sudo apt update
+sudo apt install -y build-essential autoconf automake libtool pkg-config clang bison cmake mercurial ninja-build flex texinfo time libglib2.0-dev libpixman-1-dev libarchive-dev libbz2-dev libattr1-dev libcap-ng-dev libexpat1-dev libgmp-dev libncurses-dev bc
+```
+#### QEMU
+Clone the CHERI Alliance QEMU repo:
+```
+git clone https://github.com/CHERI-Alliance/qemu.git
+cd qemu
+git checkout codasip-cheri-riscv_v3   
+```
+Configure, build and install:
+```
+mkdir build && cd build
+../configure --target-list=riscv32cheri-softmmu,riscv64cheri-softmmu --disable-werror
+make -j$(nproc)
+sudo make install
+```
+#### LLVM
+Clone the CHERI Alliance LLVM repo:
+```
+git clone https://github.com/CHERI-Alliance/llvm-project.git
+cd llvm-project
+git checkout codasip-cheri-riscv
+```
+Configure, build and install:
+```
+cd llvm-project
+mkdir build && cd build
+cmake -G Ninja ../llvm \
+  -DCMAKE_INSTALL_PREFIX=/opt/codasip-llvm \
+  -DLLVM_TARGETS_TO_BUILD="RISCV" \
+  -DLLVM_ENABLE_PROJECTS="clang;lld" \
+  -DCMAKE_BUILD_TYPE=Release
+ninja               
+sudo ninja install   
+```
+make had some issues so we used ninja for llvm, we ended up placing LLVM in /opt/codasip-llvm to verify it was installed correctly.
+#### GDB
+Clone the CHERI Alliance GDB repo:
+```
+git clone https://github.com/CHERI-Alliance/gdb.git
+cd gdb
+git checkout codasip-cheri-riscv
+```
+Configure, build and install:
+```
+mkdir build-gdb && cd build-gdb
+../configure --target=riscv32-unknown-elf --disable-werror
+make -j$(nproc)
+sudo make install
+```
 ## Building and Running
-Assembly programs should be placed in `~/cheri/PROGRAM.S`, the cheri folder will be created when using cheribuild. 
 
-**After cloning this repo move Makefile and linker script into `~/cheri`**
+Assembly programs should be placed in either `./codasip/` or `./cambridge/`  and should use `*.S`.
 
-The Makefile include the following build targets:
+The two toolchains use different instructions so we seperated programs written for either one toolchain or the other.
+
+The Makefile provides the following targets:
+
+```bash
+make build TARGET=test               # Build a program (CHERI by default, use CHERI=0 for baseline)
+make run TARGET=test                 # Build and run a CHERI program in QEMU
+make gdb TARGET=test                 # Start GDB with a CHERI-enabled binary
+make clean                           # Remove all build artifacts
 ```
-make build TARGET=test               # CHERI build
-make build CHERI=0 TARGET=test       # Non-CHERI build
-make run                             # CHERI, kernel mode
-make run  CHERI=0                    # Non-CHERI
-make gdb TARGET=test                 
-make clean                
+
+**Optional flag:**
+
+* `CHERI=0`: disables CHERI support for baseline RISC-V32
+* `TOOLCHAIN=codasip`: Uses the CHERI-Alliance toolchain
+
+All programs are assembled with CHERI Clang using a custom linker script targeting `0x80000000`.
+
+## GDB Debugging
+
+Start GDB for a target with:
+
+```bash
+make gdb TARGET=test
 ```
-**Optional flags:**
-`CHERI=0`: build for baseline RISC-V32 (no CHERI)
 
-Programs are assembled and linked using CHERI Clang and a custom linker script targeting 0x80000000. 
+In GDB: `target remote :1234`
+QEMU runs with `-s` to enable the GDB server on port 1234.
 
-Binaries are run on CHERI-QEMU in bare-metal mode to observe CHERI instruction behavior, such as setting capability bounds, permissions, and triggering faults. 
+### Useful GDB Commands
 
-GDB is used to step through instructions and inspect capability register state.
-
-## gdb
-To start gdb:
-
-```
-make gdb PROGRAM=test
-```
-Run the following commands:
-```
-target remote :1234 # connect to QEMU
-set $pc = 0x80000000 # set PC to where instructions start
-```
-Launching QEMU with the -s makes QEMU start a GDB server listening on TCP port 1234 on localhost. Use `target remote :1234` to connect to QEMU using gdb. QEMU has some issues setting the PC to the proper address therefore we set it manually in gdb.
-
-Some useful commands:
-```
-monitor quit       # quit QEMU from gdb
-stepi              # next instruction
-info registers     # gives info on all registers
-info reg t0        # info on given register(s)
-print $ct0         # prints the value of the CHERI capability register ct0
-disas              # Disassemble current function
-x/8i $pc           # Show upcoming instructions
-info threads       # Show active threads/cores (if multiple cores are present)
-thread <x>          # Switch to thread/core x
-thread apply all info reg       # Show registers for all threads
-
+```gdb
+monitor quit              # Quit QEMU
+stepi                     # Step one instruction
+info registers            # Display all registers
+info reg t0               # Display a specific register
+print $ct0                # Show CHERI capability register ct0
+disas                     # Disassemble current function
+layout asm                # The assembly instructions for the currently executing function
+x/8i $pc                  # Show upcoming instructions
+info threads              # List all active cores/threads
+thread <n>                # Switch to thread/core n
+thread apply all info reg # Show registers for all threads
 
 ```
-## Included files
-- `Makefile`: Build system supporting CHERI/non-CHERI and BIOS/kernel modes
 
-- `linker.ld`: Bare-metal memory layout for ELF and binary generation
+## File Structure
 
-- `*.S`: CHERI assembly programs placed in ~/cheri/
+* `Makefile`: Build automation for CHERI/non-CHERI and BIOS/kernel modes
+* `linker.ld`: Linker script targeting bare-metal memory at `0x80000000`
+* `bios.S`: Bootloader used in BIOS mode
+* `programs/*.S`: Assembly source files to be tested
 
 ## Academic Use
-This setup was developed as part of a computer science bachelor project at Copenhagen University to study CHERI's hardware-enforced memory safety. It provides a platform for testing capability behavior and write simple cheri-enabled assembly programs to be tested on bare-metal QEMU.
 
-
-
-
+This setup was developed for a computer science bachelor's project at Copenhagen University to explore CHERI's hardware-enforced memory safety. It enables writing and testing CHERI-enabled RISC-V assembly in a minimal bare-metal environment.
