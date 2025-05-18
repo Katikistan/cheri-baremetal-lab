@@ -1,35 +1,49 @@
 TARGET ?= hello
-SRC = $(HOME)/cheri/$(TARGET).S
+SRC = $(HOME)/cheri-baremetal-lab/$(TARGET).S
 CORES ?= 1
-CHERI ?= 1          # 1 = CHERI, 0 = non-CHERI
+TOOLCHAIN ?= codasip
 
-SDK := $(HOME)/cheri/output/sdk/bin
-CLANG := $(SDK)/clang
-LD := $(SDK)/ld.lld
-OBJCOPY := $(SDK)/llvm-objcopy
-GDB := $(SDK)/gdb
-
-OBJ := $(TARGET).o
-EXE := $(TARGET)
-LINKER := $(HOME)/cheri/linker.ld
-
-ifeq ($(CHERI),1) # if cheri use cheri qemu and cheri arc, else dont
-  QEMU := $(SDK)/qemu-system-riscv32cheri
-  ARCH_FLAGS := -target riscv32-unknown-freebsd -march=rv32ixcheri -mabi=il32pc64
+ifeq ($(TOOLCHAIN),codasip)
+$(info Using codasip toolchain)
+	SDK := /usr/local/bin
+	GDB := $(SDK)/riscv32-unknown-elf-gdb
+	LLVM_PATH := /opt/codasip-llvm/bin
+	CLANG := $(LLVM_PATH)/clang
+	LD := $(LLVM_PATH)/ld.lld
+	OBJCOPY := $(LLVM_PATH)/llvm-objcopy
 else
-  QEMU := $(SDK)/qemu-system-riscv32
-  ARCH_FLAGS := -target riscv32-unknown-elf -march=rv32i -mabi=ilp32
+$(info Using cambridge toolchain)
+	SDK := $(HOME)/cheri/output/sdk/bin
+	CLANG := $(SDK)/clang
+	LD := $(SDK)/ld.lld
+	OBJCOPY := $(SDK)/llvm-objcopy
+	GDB := $(SDK)/gdb
 endif
 
-CFLAGS := $(ARCH_FLAGS) -nostdlib -ffreestanding -fno-pic -g
+LINKER := $(HOME)/cheri-baremetal-lab/linker.ld
+OBJ := $(TARGET).o
+EXE := $(TARGET).elf
 
-QEMU_BASE_FLAGS := -machine virt -nographic -cpu rv32 -m 256M -smp $(CORES) -bios none -kernel $(EXE) -S -s
+ifeq ($(CHERI),0) 
+$(info CHERI not enabled)
+  QEMU := $(HOME)/cheri/output/sdk/bin/qemu-system-riscv32
+  ARCH_FLAGS := -target riscv32-unknown-elf -march=rv32i -mabi=ilp32
+else
+$(info CHERI enabled)
+  QEMU := $(SDK)/qemu-system-riscv32cheri
+  ARCH_FLAGS := -target riscv32-unknown-elf -march=rv32ixcheri -mabi=il32pc64
+
+endif
+
+CFLAGS := $(ARCH_FLAGS) 
+
+QEMU_FLAGS := -machine virt -nographic -cpu rv32 -m 2G -smp $(CORES) -bios none -kernel $(EXE) -S -s
 
 .PHONY: build run gdb clean
 
 build:
 	$(CLANG) $(CFLAGS) -c $(SRC) -o $(OBJ)
-	$(LD) -T $(LINKER) -o $(EXE) $(OBJ)
+	$(LD) -T linker.ld -o $(EXE) $(OBJ)
 
 run: build
 	$(QEMU) $(QEMU_FLAGS)
@@ -38,4 +52,4 @@ gdb: $(EXE)
 	$(GDB) $(EXE)
 
 clean:
-	rm -f *.o $(TARGET)
+	rm -f *.o *.elf
