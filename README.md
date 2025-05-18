@@ -102,7 +102,7 @@ QEMU runs with `-s` to enable the GDB server on port 1234.
 
 ### Useful GDB Commands
 
-```gdb
+```
 monitor quit              # Quit QEMU
 stepi                     # Step one instruction
 info registers            # Display all registers
