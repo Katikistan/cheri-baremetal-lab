@@ -22,7 +22,7 @@ core0:
     csetoffset ct1, ddc, t0       # Set the offset of DDC to get base+offset
     cbuildcap ct1, ddc, ct1       # Construct a new capability from DDC and offset
     csetbounds ct1, ct1, 32
-    csc ct1, 0(ct1)
+    sc.cap ct1, 0(ct1)
     ebreak                 
 
 core1:
@@ -31,6 +31,6 @@ core1:
     addi     t0, t0, %lo(shared_cap)
     cfromptr ct1, ddc, t0
     csetbounds ct1, ct1, 32
-    clc ct2, 0(ct1)
+    lc.cap ct2, 0(ct1)
     cgettag t1, ct2
     ebreak                 

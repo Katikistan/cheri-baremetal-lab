@@ -52,4 +52,6 @@ gdb: $(EXE)
 	$(GDB) $(EXE)
 
 clean:
-	rm -f *.o *.elf
+	rm -f *.o *.elf cambridge/*.o cambridge/*.elf codasip/*.o codasip/*.elf
+
+

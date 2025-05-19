@@ -1,13 +1,12 @@
     .section .text
     .global _start
     .option capmode
-    .attribute arch, "rv64gcxcheri"
 
 
 .section .data
-.align 6                       # 32-byte aligned
+.align 5                       # 32-byte aligned
 shared_cap:
-    .space 128                      # 64 bytes, but bounds will be limited to 32
+    .space 64                      # 64 bytes, but bounds will be limited to 32
 
 .section .text
 _start:
@@ -17,10 +16,10 @@ _start:
     cfromptr ct0, ddc, t0
 
     # 2. Limit bounds to 32 bytes
-    csetbounds ct0, ct0, 64
+    csetbounds ct0, ct0, 32
 
     # 3. Set an out-of-bounds offset
-    li       t1, 80                 # Offset beyond the 32-byte limit
+    li       t1, 42                 # Offset beyond the 32-byte limit
     cincoffset ct1, ct0, t1        # ct1 = ct0 + 40
 
     # 4. Try to load from out-of-bounds address (should fault)
@@ -33,21 +32,3 @@ _start:
     ebreak
 fail:
     j fail
-
-# Trap handler logs mcause and mtval
-.globl trap_handler
-trap_handler:
-    csrr t1, mcause
-    csrr t2, mtval
-
-
-
-trap_loop:
-    j trap_loop
-
-.section .data
-.globl trap_info
-trap_info:
-    .word 0
-    .word 0
-

@@ -16,7 +16,6 @@ _start:
     # Derive a capability to shared_cap
     cspecialrw ct0, pcc, c0     # Put ddc into ct0
     csetoffset ct0, ct0, t1     # Set the offset of pcc to get base+offset
-    cbuildcap ct0, pcc, ct0     # Construct a new capability from DDC and offset
     csetbounds ct0, ct0, 32     # Limit bounds
     cgettag a0, ct0
     cgetbase a1, ct0
