@@ -10,6 +10,7 @@ $(info Using codasip toolchain)
 	LLVM_PATH := /opt/codasip-llvm/bin
 	CLANG := $(LLVM_PATH)/clang
 	LD := $(LLVM_PATH)/ld.lld
+	DUMP := $(LLVM_PATH)/llvm-objdump
 	OBJCOPY := $(LLVM_PATH)/llvm-objcopy
 	QEMU_BASE_FLAGS := -machine virt -nographic -cpu rv32,Xcheri_purecap=on,cheri_v090=on -m 2G 
 else
@@ -37,23 +38,27 @@ $(info CHERI enabled)
 
 endif
 
-CFLAGS := $(ARCH_FLAGS) 
+CFLAGS := $(ARCH_FLAGS) -g
 
-QEMU_FLAGS := $(QEMU_BASE_FLAGS) -d instr -smp $(CORES) -bios none -kernel $(EXE) -S -s
+QEMU_FLAGS := $(QEMU_BASE_FLAGS) -d instr -smp $(CORES) -bios none -kernel $(EXE) -S -s 
 
 .PHONY: build run gdb clean
+
 
 build:
 	$(CLANG) $(CFLAGS) -c $(SRC) -o $(OBJ)
 	$(LD) -T linker.ld -o $(EXE) $(OBJ)
+	
+dissamble: 
+	$(DUMP) -d $(EXE) > $(TARGET)_disassembly.txt 2>&1
 
-run: build
-	$(QEMU) $(QEMU_FLAGS)
+run: build dissamble
+	$(QEMU) $(QEMU_FLAGS) > $(TARGET)_qemu_output.txt 2>&1
 
 gdb: $(EXE)
-	$(GDB) $(EXE)
+	$(GDB) $(EXE) -ex "target remote :1234" 
 
 clean:
-	rm -f *.o *.elf cambridge/*.o cambridge/*.elf codasip/*.o codasip/*.elf
+	rm -f *.o *.elf cambridge/*.o cambridge/*.elf codasip/*.o codasip/*.elf codasip/*.txt
 
 
