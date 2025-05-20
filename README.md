@@ -10,7 +10,7 @@ Uses [CHERI ISAv9](https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-987.pdf), see
 ## CHERI-Alliance Toolchain
 Developed by Codasip in collaboration with CHERI teams at Cambridge
 
-[CHERI Alliance github](https://github.com/CTSRD-CHERI)
+[CHERI Alliance github](https://github.com/CHERI-Alliance)
 
 Uses the [RISC-V CHERI specification v0.9.3](https://github.com/riscv/riscv-cheri/releases/tag/v0.9.3-prerelease)
 ## Setup
@@ -131,6 +131,8 @@ x/8i $pc                  # Show upcoming instructions
 info threads              # List all active cores/threads
 thread <n>                # Switch to thread/core n
 thread apply all info reg # Show registers for all threads
+set $pc = 0x80000000      # Sets program counter to where start of program is 
+
 
 ```
 
