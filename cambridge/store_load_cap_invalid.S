@@ -24,7 +24,7 @@ _start:
     candperm ct0, ct0, a0       # clears permissions
 
     sc.cap ct1, 0(ct0)          # should fail   
-    lc.cap ct2, 0(ct0)          # should never reach
+    lc.cap ct2, 0(ct0)          
   
     # alternative instructions to store and load 
     ccleartag ct0, ct0      

@@ -21,6 +21,13 @@ _start:
     csetoffset ct1, ct0, t1     # set ct0 offset and save as new cap in ct1  
     csetbounds ct1, ct1, 16     # restrict bounds
 
-    sc.cap ct1, 0(ct0)          
-    lc.cap ct2, 0(ct0)          
-  
+    # store and load 
+    ccleartag ct0, ct0      
+    csc ct1, 0(ct0)            # should fail, but doesnt
+    clc ct2, 0(ct0)     
+
+    # get tag bits to check the capability is valid
+    cgettag a0, ct0
+    cgettag a1, ct1
+    cgettag a2, ct2
+

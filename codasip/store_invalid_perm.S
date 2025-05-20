@@ -1,5 +1,5 @@
 .global _start
-
+.option arch, +zcheripurecap
 .section .data
 .align 5 # align buffer to 2^5=32-byte boundary.
 buffer:
@@ -20,7 +20,14 @@ _start:
     li       t1, 16         
     csetoffset ct1, ct0, t1     # set ct0 offset and save as new cap in ct1  
     csetbounds ct1, ct1, 16     # restrict bounds
+    li a0, 0x0                  # 0 bit mask to clear permissions
+    candperm ct0, ct0, a0       # clears permissions
 
-    sc.cap ct1, 0(ct0)          
+    sc.cap ct1, 0(ct0)          # should fail   
     lc.cap ct2, 0(ct0)          
-  
+
+    # get tag bits to check the capability is valid
+    cgettag a0, ct0
+    cgettag a1, ct1
+    cgettag a2, ct2
+

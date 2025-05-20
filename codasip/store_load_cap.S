@@ -21,6 +21,6 @@ _start:
     csetoffset ct1, ct0, t1     # set ct0 offset and save as new cap in ct1  
     csetbounds ct1, ct1, 16     # restrict bounds
 
-    sc.cap ct1, 0(ct0)          
+    sc.cap ct1, 0(ct0)           
     lc.cap ct2, 0(ct0)          
   
