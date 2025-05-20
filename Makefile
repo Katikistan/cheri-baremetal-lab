@@ -56,7 +56,11 @@ run: build dissamble
 	$(QEMU) $(QEMU_FLAGS) > $(TARGET)_qemu_output.txt 2>&1
 
 gdb: $(EXE)
-	$(GDB) $(EXE) -ex "target remote :1234" 
+	$(GDB) $(EXE) -ex "set logging file $(TARGET)_gdb_log.txt" \
+	-ex "set logging overwrite on" \
+	-ex "set logging debugredirect on" \
+	-ex "set logging enabled on" \
+	-ex "target remote :1234"
 
 clean:
 	rm -f *.o *.elf cambridge/*.o cambridge/*.elf codasip/*.o codasip/*.elf codasip/*.txt
