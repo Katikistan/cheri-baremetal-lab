@@ -4,9 +4,9 @@
 .section .text
 _start:
     # Derive from root cap DDC
-    cspecialrw ct0, ddc, c0      
-    csetbounds ct0, ct0, 32  
+    csrrw ct0, ddc, c0    # cspecialrw  
+    scbnds ct0, ct0, 32   # csetbounds
     li a1, 0xffc # removing bit 0 and 1 (global and execute permission)
-    candperm ct0, ct0, a1
-    cgetperm a2, ct0 
+    acperm ct0, ct0, a1   # candperm
+    gcperm a2, ct0        # cgetperm
 
