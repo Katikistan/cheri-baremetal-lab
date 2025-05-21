@@ -6,9 +6,12 @@ Developed by the CTSRD project (Cambridge, SRI International, and others)
 [CTSRD-CHERI github](https://github.com/CTSRD-CHERI)
 
 Uses [CHERI ISAv9](https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-987.pdf), see chapter 7 for the CHERI-RISC-V instruction-set.
+## Academic Use
+
+This setup was developed for a computer science bachelor's project at Copenhagen University to explore CHERI's hardware-enforced memory safety. It enables writing and testing CHERI-enabled RISC-V assembly in a minimal bare-metal environment. We are testing to see if the CHERI-Alliance SDK is capable of running pure-metal CHERI RISCV 32 programs using emulated hardware in QEMU
 
 ## CHERI-Alliance Toolchain
-Developed by Codasip in collaboration with CHERI teams at Cambridge
+Developed by the CHERI-Alliance
 
 [CHERI Alliance github](https://github.com/CHERI-Alliance)
 
@@ -102,7 +105,7 @@ make clean                           # Remove all build artifacts
 **Optional flag:**
 
 * `CHERI=0`: disables CHERI support for baseline RISC-V32
-* `TOOLCHAIN=codasip`: Uses the CHERI-Alliance toolchain
+* `TOOLCHAIN=Alliance`: Uses the CHERI-Alliance toolchain
 
 All programs are assembled with CHERI Clang using a custom linker script targeting `0x80000000`.
 
@@ -111,10 +114,8 @@ All programs are assembled with CHERI Clang using a custom linker script targeti
 Start GDB for a target with:
 
 ```
-make gdb TARGET=test
+make gdb TARGET=test 
 ```
-
-In GDB: `target remote :1234`
 QEMU runs with `-s` to enable the GDB server on port 1234.
 
 ### Useful GDB Commands
@@ -141,9 +142,5 @@ set $pc = 0x80000000      # Sets program counter to where start of program is
 * `Makefile`: Build automation for CHERI/non-CHERI and BIOS/kernel modes
 * `README`: The file you are currently reading
 * `linker.ld`: Linker script targeting bare-metal memory at `0x80000000`
-* `codasip/*.S`: CHERI-alliance Assembly source files to be tested
+* `alliance/*.S`: CHERI-alliance Assembly source files to be tested
 * `cambridge/*.S`: CTSRD Assembly source files to be tested
-
-## Academic Use
-
-This setup was developed for a computer science bachelor's project at Copenhagen University to explore CHERI's hardware-enforced memory safety. It enables writing and testing CHERI-enabled RISC-V assembly in a minimal bare-metal environment.
