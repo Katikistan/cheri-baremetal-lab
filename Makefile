@@ -1,10 +1,10 @@
 TARGET ?= hello
 SRC = $(HOME)/cheri-baremetal-lab/$(TARGET).S
 CORES ?= 1
-TOOLCHAIN ?= codasip
+TOOLCHAIN ?= alliance
 
-ifeq ($(TOOLCHAIN),codasip)
-$(info Using codasip toolchain)
+ifeq ($(TOOLCHAIN),alliance)
+$(info Using CHERI-Alliance toolchain)
 	SDK := /usr/local/bin
 	GDB := $(SDK)/riscv32-unknown-elf-gdb
 	LLVM_PATH := /opt/codasip-llvm/bin
@@ -14,7 +14,7 @@ $(info Using codasip toolchain)
 	OBJCOPY := $(LLVM_PATH)/llvm-objcopy
 	QEMU_BASE_FLAGS := -machine virt -nographic -cpu rv32,Xcheri_purecap=on,cheri_v090=on -m 2G 
 else
-$(info Using cambridge toolchain)
+$(info Using cheribuild toolchain)
 	SDK := $(HOME)/cheri/output/sdk/bin
 	CLANG := $(SDK)/clang
 	LD := $(SDK)/ld.lld
@@ -63,6 +63,6 @@ gdb: $(EXE)
 	-ex "target remote :1234"
 
 clean:
-	rm -f *.o *.elf cambridge/*.o cambridge/*.elf codasip/*.o codasip/*.elf codasip/*.txt
+	rm -f *.o *.elf cambridge/*.o cambridge/*.elf alliance/*.o alliance/*.elf alliance/*.txt
 
 
