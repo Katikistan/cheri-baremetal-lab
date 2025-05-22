@@ -1,5 +1,5 @@
 .global _start # entry point
-
+.option arch, +zcheripurecap
 .section .data
 .align 5 # align shared cap to 2^5=32-byte boundary.
 buffer:
@@ -18,17 +18,18 @@ core0:
     addi     t1, t1, %lo(buffer)    # Add low 12 bits
 
     # Derive a capability to buffer
-    cspecialrw ct0, ddc, c0     
-    csetoffset ct0, ct0, t1     
-    csetbounds ct0, ct0, 32     
+    auipc    ct0, 0
+    scaddr   ct0, ct0, t1         # Set ct1 address to buffer
+    scbndsi  ct0, ct0, 32         # Optionally bound to 64 bytes
+    
+    # Copy capability
+    cmv    ct1, ct0    
 
     # Create a capability to store
-    li       t1, 16         # offset
-    csetoffset ct1, ct0, t1   
-    csetbounds ct1, ct1, 16  
-    li a0, 0x0     
+    caddi ct1, ct1, 16
+    scbndsi  ct1, ct1, 16    
     
-    sc.cap ct1, 0(ct0)     # Store the capabiltiy
+    sc ct1, 0(ct0)     # Store the capabiltiy
     ebreak     # switch to other thread            
 
 core1:
@@ -37,10 +38,12 @@ core1:
     addi     t1, t1, %lo(buffer)    # Add low 12 bits
 
     # Derive a capability to buffer
-    cspecialrw ct0, ddc, c0     
-    csetoffset ct0, ct0, t1     
-    csetbounds ct0, ct0, 32     
+    auipc    ct0, 0
+    scaddr   ct0, ct0, t1         # Set ct1 address to buffer
+    scbndsi  ct0, ct0, 32         # Optionally bound to 64 bytes
+    
 
-    lc.cap ct2, 0(ct0) # load cap gotten from other core
+
+    lc  ct2, 0(ct0) # load cap gotten from other core
     cgettag t1, ct2
     ebreak                 

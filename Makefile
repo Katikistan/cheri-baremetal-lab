@@ -40,7 +40,7 @@ endif
 
 CFLAGS := $(ARCH_FLAGS) -g
 
-QEMU_FLAGS := $(QEMU_BASE_FLAGS) -d instr -smp $(CORES) -bios none -kernel $(EXE) -S -s 
+QEMU_FLAGS := $(QEMU_BASE_FLAGS) -d instr,int -D $(TARGET)_qemu.log -smp $(CORES) -bios none -kernel $(EXE) -S -s 
 
 .PHONY: build run gdb clean
 
@@ -52,17 +52,15 @@ build:
 dissamble: 
 	$(DUMP) -d $(EXE) > $(TARGET)_disassembly.txt 2>&1
 
-run: build dissamble
-	$(QEMU) $(QEMU_FLAGS) > $(TARGET)_qemu_output.txt 2>&1
+run: build
+	$(QEMU) $(QEMU_FLAGS) 
+
 
 gdb: $(EXE)
-	$(GDB) $(EXE) -ex "set logging file $(TARGET)_gdb_log.txt" \
-	-ex "set logging overwrite on" \
-	-ex "set logging debugredirect on" \
-	-ex "set logging enabled on" \
-	-ex "target remote :1234"
+	$(GDB) $(EXE) -ex "target remote :1234" 
 
 clean:
-	rm -f *.o *.elf cambridge/*.o cambridge/*.elf alliance/*.o alliance/*.elf alliance/*.txt
+	rm -f *.o *.elf */*.o */*.elf */*.txt 
+	
 
 

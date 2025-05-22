@@ -1,33 +1,23 @@
 .global _start
-
+.option arch, +zcheripurecap
 .section .data
-.align 5 # align buffer to 2^5=32-byte boundary.
+.align 2
 buffer:
-    .space 32 # space for one capabiltiy
+    .space 8
 
 .section .text
 _start:
-    # Load address of buffer into t0
-    lui      t1, %hi(buffer)        # Get high 20 bits of address
-    addi     t1, t1, %lo(buffer)    # Add low 12 bits
+    # Get address of buffer
+    lui      t0, %hi(buffer)
+    addi     t0, t0, %lo(buffer)
 
-    # Derive a capability from pcc
-    cspecialrw ct0, pcc, c0     
-    csetoffset ct0, ct0, t1     
-    csetbounds ct0, ct0, 32     
+    # Create capability to buffer
+    auipc    ct1, 0
+    scaddr   ct1, ct1, t0
+    scbndsi  ct1, ct1, 8          # bound it to 64 bytes
 
-    # Create a capability to store
-    li       t1, 16         
-    csetoffset ct1, ct0, t1     # set ct0 offset and save as new cap in ct1  
-    csetbounds ct1, ct1, 16     # restrict bounds
+    cbld     ct1, ct2, ct1
 
-    # store and load 
-    ccleartag ct0, ct0      
-    csc ct1, 0(ct0)            # should fail, but doesnt
-    clc ct2, 0(ct0)     
-
-    # get tag bits to check the capability is valid
-    cgettag a0, ct0
-    cgettag a1, ct1
-    cgettag a2, ct2
-
+    li       t0, 0x41              # ASCII 'A'
+    sb       t0, 0(ct1)            # store byte 'A' at buffer[0]
+    lb       t2, 0(ct1)

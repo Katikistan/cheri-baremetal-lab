@@ -3,23 +3,17 @@
 .section .data
 .align 5   # 32-byte aligned
 buffer:
-    .space 64   # 64 bytes, but bounds will be limited to 32
+    .space 32   
 
 .section .text
 _start:
-    # Create a capability to buffer
-    lui      t0, %hi(buffer)
-    addi     t0, t0, %lo(buffer)
-    cfromptr ct0, ddc, t0
+lui      t0, %hi(buffer)
+addi     t0, t0, %lo(buffer)
 
-    # Limit bounds to 32 bytes
-    csetbounds ct0, ct0, 32
+auipc    ct1, 0
+scaddr   ct1, ct1, t0         # Set ct1 address to buffer
+scbndsi  ct1, ct1, 4        
 
-    # Set an out-of-bounds offset
-    li       t1, 42                 # Offset beyond the 32-byte limit
-    cincoffset ct1, ct0, t1        # ct1 = ct0 + 40
-
-    # 4. Try to load from out-of-bounds address (should fault)
-    csc      ct1, 0(ct1)     # Store the capabiltiy
-    clc      ct2, 0(ct1)           # Attempt to load a capability
-
+cmv    ct2, ct1             # Copy capability
+sc       ct2, 0(ct1)          # Store at buffer
+lc       ct3, 0(ct1)          # Load from buffer
