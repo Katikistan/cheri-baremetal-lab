@@ -8,18 +8,17 @@ buffer:
 .section .text
 _start:
     # Get address of buffer
-    lui      t0, %hi(buffer)
-    addi     t0, t0, %lo(buffer)
+    lui      a0, %hi(buffer)
+    addi     a0, a0, %lo(buffer)
 
     # Create capability to buffer
-    auipc    ct1, 0
-    scaddr   ct1, ct1, t0
-    scbndsi  ct1, ct1, 8 
+    auipc    ct0, 0
+    scaddr   ct0, ct0, a0
+    scbndsi  ct0, ct0, 8 
              
     # Will clear tag
-    cbld     ct1, ct2, ct1
+    cbld     ct0, ct1, ct0
     # ASCII 'A'
-    li       t0, 0x41  
-    # store byte 'A' at buffer[0]            
-    sb       t0, 0(ct1)            
-    lb       t2, 0(ct1)
+    li       a1, 0x41  
+    sb       a1, 0(ct0)            
+    lb       a2, 0(ct0)
