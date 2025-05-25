@@ -16,7 +16,6 @@ _start:
     # Invalidate the capability by clearing its tag
     # ccleartag c1, c1 
     
-
     # Try to store character 'A' (0x41) 
     li      a1, 0x41
     sb.cap     a1, 0(c1)            # store: Should be ignored/fault if tag cleared

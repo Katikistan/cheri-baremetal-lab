@@ -14,10 +14,12 @@ _start:
     # Create capability to buffer
     auipc    ct1, 0
     scaddr   ct1, ct1, t0
-    scbndsi  ct1, ct1, 8          # bound it to 64 bytes
-
+    scbndsi  ct1, ct1, 8 
+             
+    # Will clear tag
     cbld     ct1, ct2, ct1
-
-    li       t0, 0x41              # ASCII 'A'
-    sb       t0, 0(ct1)            # store byte 'A' at buffer[0]
+    # ASCII 'A'
+    li       t0, 0x41  
+    # store byte 'A' at buffer[0]            
+    sb       t0, 0(ct1)            
     lb       t2, 0(ct1)

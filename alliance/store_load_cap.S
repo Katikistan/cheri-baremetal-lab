@@ -7,13 +7,17 @@ buffer:
 
 .section .text
 _start:
-lui      t0, %hi(buffer)
-addi     t0, t0, %lo(buffer)
+    lui      t0, %hi(buffer)
+    addi     t0, t0, %lo(buffer)
 
-auipc    ct1, 0
-scaddr   ct1, ct1, t0         # Set ct1 address to buffer
-scbndsi  ct1, ct1, 32         # Optionally bound to 64 bytes
+    auipc    ct1, 0
+    scaddr   ct1, ct1, t0         
+    scbndsi  ct1, ct1, 32         
 
-cmv    ct2, ct1             # Copy capability
-sc       ct2, 0(ct1)          # Store at buffer
-lc       ct3, 0(ct1)          # Load from buffer
+    # Copy capability
+    cmv    ct2, ct1   
+    # Store at buffer          
+    sc       ct2, 0(ct1) 
+    # Load from buffer         
+    lc       ct3, 0(ct1)          
+
