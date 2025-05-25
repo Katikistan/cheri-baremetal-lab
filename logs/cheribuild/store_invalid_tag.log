@@ -1,0 +1,28 @@
+[0:0] Requested instruction logging @ 80000000 
+[0:0] 0x80000000:  81000537          lui             a0,-2130706432
+    Write x10/a0 = 81000000
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000004:  00050513          mv              a0,a0
+    Write x10/a0 = 81000000
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000008:  020002db          cspecialrw      ct0,scr0,cnull
+    Write c5/ct0|v:1 s:0 p:00000fff f:0 b:00000000 l:ffffffff
+             |o:80000008 t:0000000f
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x8000000c:  20a282db          csetaddr        ct0,ct0,a0
+    Write c5/ct0|v:1 s:0 p:00000fff f:0 b:00000000 l:ffffffff
+             |o:81000000 t:0000000f
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000010:  0082a2db          csetbounds      ct0,ct0,8
+    Write c5/ct0|v:1 s:0 p:00000fff f:0 b:81000000 l:00000008
+             |o:00000000 t:0000000f
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000014:  feb282db          ccleartag       ct0,ct0
+    Write c5/ct0|v:0 s:0 p:00000fff f:0 b:81000000 l:00000008
+             |o:00000000 t:0000000f
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000018:  04100593          addi            a1,zero,65
+    Write x11/a1 = 00000041
+[0:0] 0x00000000:  0000              illegal         
+Got CHERI trap Tag Violation caused by register 5
+riscv_cpu_do_interrupt: hart:0, async:0, cause:0000001c, epc:0x8000001c, tval:0x000000a2, desc=cheri_fault
