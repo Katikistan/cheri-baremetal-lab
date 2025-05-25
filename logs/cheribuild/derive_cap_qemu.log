@@ -1,0 +1,21 @@
+[0:0] Requested instruction logging @ 80000000 
+[0:0] 0x80000000:  020002db          cspecialrw      ct0,scr0,cnull
+    Write c5/ct0|v:1 s:0 p:00000fff f:0 b:00000000 l:ffffffff
+             |o:80000000 t:0000000f
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000004:  0082a2db          csetbounds      ct0,ct0,8
+    Write c5/ct0|v:1 s:0 p:00000fff f:0 b:80000000 l:00000008
+             |o:00000000 t:0000000f
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000008:  00001537          lui             a0,4096
+    Write x10/a0 = 00001000
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x8000000c:  ffc50513          addi            a0,a0,-4
+    Write x10/a0 = 00000ffc
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000010:  1aa282db          candperm        ct0,ct0,a0
+    Write c5/ct0|v:1 s:0 p:00000ffc f:0 b:80000000 l:00000008
+             |o:00000000 t:0000000f
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000014:  fe0285db          cgetperm        a1,ct0
+    Write x11/a1 = 00000ffc

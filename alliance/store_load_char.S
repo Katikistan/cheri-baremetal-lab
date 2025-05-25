@@ -1,36 +1,46 @@
 .global _start
 .option arch, +zcheripurecap
 .section .data
-.align 2
+.align 3
 buffer:
     .space 8
 
 .section .text
 _start:
     # Get address of buffer
-    lui      t0, %hi(buffer)
-    addi     t0, t0, %lo(buffer)
+    lui      a0, %hi(buffer)
+    addi     a0, a0, %lo(buffer)
 
-    # Create capability to buffer
+    # Derive capability
+    auipc    ct0, 0
+    scaddr   ct0, ct0, a0
+    scbndsi  ct0, ct0, 8   
+
+    # Store char 'A'     
+    li       a1, 0x41             
+    sb       a1, 0(ct0) 
+
+    # Load with ct0          
+    lb       a2, 0(ct0)
+    
+    # UART address
+    li       a3, 0x10000000   
+
+    # Making print cap
     auipc    ct1, 0
-    scaddr   ct1, ct1, t0
+    scaddr   ct1, ct1, a3
     scbndsi  ct1, ct1, 8   
-    # ASCII 'A'      
-    li       t0, 0x41 
-    # store byte 'A' at buffer[0]             
-    sb       t0, 0(ct1)           
-    lb       t2, 0(ct1)
 
     # Print loaded character
-    li      t1, 0x10000000           # UART address
-    csetoffset c1, c1, t1
-    sb.cap      a2, 0(c1)            # UART: print loaded char
+    sb       a2, 0(ct1)   
 
     # Print space
-    li      t2, 0x20
-    sb.cap      t2, 0(c1)
+    li      a4, 0x20
+    sb      a4, 0(ct1)
 
-    # Convert tag bit (0 or 1) to ASCII '0' (0x30) or '1' (0x31)
-    cgettag a3, c1 # get tag
-    addi    a3, a3, 0x30
-    sb.cap      a3, 0(c1)            # UART: print tag bit
+    # Convert tag bit (0 or 1) 
+    # ASCII '0' (0x30) or '1' (0x31)
+    gctag a5, ct1 
+    addi    a5, a5, 0x30
+    # Print tag bit
+    sb      a5, 0(ct1)            

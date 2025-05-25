@@ -1,0 +1,20 @@
+[0:0] Requested instruction logging @ 00001000 
+[0:0] 0x00001000:  00000297          auipc           t0,0            # 0x1000
+    Write x5/t0 = 00001000
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x00001004:  02828613          addi            a2,t0,40
+    Write x12/a2 = 00001028
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x00001008:  f1402573          csrrs           a0,mhartid,zero
+    Write x10/a0 = 00000000
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x0000100c:  0202a583          lw              a1,32(t0)
+    Memory Read [00001020] = bf000000
+    Write x11/a1 = bf000000
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x00001010:  0182a283          lw              t0,24(t0)
+    Memory Read [00001018] = 80000000
+    Write x5/t0 = 80000000
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x00001014:  00028067          jr              t0
+[0:0] 0x00000000:  0000              illegal         

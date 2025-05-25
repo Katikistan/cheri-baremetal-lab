@@ -1,0 +1,12 @@
+[0:0] Requested instruction logging @ 80000000 
+[0:0] 0x80000000:  00000297          auipcc          ct0,0           # 0x80000000
+    Write c5/ct0|v:1 sdp:3 m:0 ap:3f cl:0 ct:0 b:00000000 a:80000000 t:ffffffff
+[0:0] 0x80000004:  0622d293          scbdsi          ct0,ct0,32
+    Write c5/ct0|v:1 sdp:3 m:0 ap:3f cl:0 ct:0 b:80000000 a:80000000 t:80000020
+[0:0] 0x80000008:  01800513          addi            a0,zero,24
+  x10/a0 <- 00000018 (setting integer value)
+[0:0] 0x8000000c:  0ca2a2b3          acperm          ct0,ct0,a0
+    Write c5/ct0|v:1 sdp:0 m:0 ap: 0 cl:0 ct:0 b:80000000 a:80000000 t:80000020
+[0:0] 0x80000010:  101285b3          gcperm          a1,ct0
+  x11/a1 <- 00000000 (setting integer value)
+

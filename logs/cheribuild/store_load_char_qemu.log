@@ -1,0 +1,61 @@
+[0:0] Requested instruction logging @ 80000000 
+[0:0] 0x80000000:  81000537          lui             a0,-2130706432
+    Write x10/a0 = 81000000
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000004:  00050513          mv              a0,a0
+    Write x10/a0 = 81000000
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000008:  020002db          cspecialrw      ct0,scr0,cnull
+    Write c5/ct0|v:1 s:0 p:00000fff f:0 b:00000000 l:ffffffff
+             |o:80000008 t:0000000f
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x8000000c:  20a282db          csetaddr        ct0,ct0,a0
+    Write c5/ct0|v:1 s:0 p:00000fff f:0 b:00000000 l:ffffffff
+             |o:81000000 t:0000000f
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000010:  0082a2db          csetbounds      ct0,ct0,8
+    Write c5/ct0|v:1 s:0 p:00000fff f:0 b:81000000 l:00000008
+             |o:00000000 t:0000000f
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000014:  04100593          addi            a1,zero,65
+    Write x11/a1 = 00000041
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000018:  f8b2845b          illegal         
+    Memory Write [81000000] = 41
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x8000001c:  fa82865b          illegal         
+    Memory Read [81000000] = 41
+    Write x12/a2 = 00000041
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000020:  100006b7          lui             a3,268435456
+    Write x13/a3 = 10000000
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000024:  0200035b          cspecialrw      ct1,scr0,cnull
+    Write c6/ct1|v:1 s:0 p:00000fff f:0 b:00000000 l:ffffffff
+             |o:80000024 t:0000000f
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000028:  20d3035b          csetaddr        ct1,ct1,a3
+    Write c6/ct1|v:1 s:0 p:00000fff f:0 b:00000000 l:ffffffff
+             |o:10000000 t:0000000f
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x8000002c:  0083235b          csetbounds      ct1,ct1,8
+    Write c6/ct1|v:1 s:0 p:00000fff f:0 b:10000000 l:00000008
+             |o:00000000 t:0000000f
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000030:  f8c3045b          illegal         
+    Memory Write [10000000] = 41
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000034:  02000713          addi            a4,zero,32
+    Write x14/a4 = 00000020
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000038:  f8e3045b          illegal         
+    Memory Write [10000000] = 20
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x8000003c:  fe4307db          cgettag         a5,ct1
+    Write x15/a5 = 00000001
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000040:  03078793          addi            a5,a5,48
+    Write x15/a5 = 00000031
+[0:0] 0x00000000:  0000              illegal         
+[0:0] 0x80000044:  f8f3045b          illegal         
+    Memory Write [10000000] = 31
