@@ -1,5 +1,6 @@
 .global _start 
 .section .data
+# 2^3 = 8 bytes (64 bits) 
 .align 3 
 buffer:
     .space 8
