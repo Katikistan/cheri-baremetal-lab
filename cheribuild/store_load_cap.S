@@ -15,7 +15,7 @@ _start:
     csetaddr ct0, ct0, a0    
     csetbounds ct0, ct0, 8     
 
-    # Create a capability to store
+    # Derive a capability to store
     li       a1, 4        
     csetoffset ct1, ct0, a1  
     # restrict bounds   
