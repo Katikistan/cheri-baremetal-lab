@@ -1,9 +1,9 @@
 .global _start
 .section .data
-# 2^3 = 8 byte (64 bits)
-.align 3 
+# 2^4 = 16 byte (128 bits)
+.align 4 
 buffer:
-    .space 8   
+    .space 16  
 .section .text
 _start:
     lui     a0, %hi(buffer)

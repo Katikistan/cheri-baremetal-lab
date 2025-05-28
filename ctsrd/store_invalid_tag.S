@@ -1,9 +1,9 @@
 .global _start 
 .section .data
-# 2^3 = 8 bytes (64 bits) 
-.align 3 
+# 2^4 = 16 byte (128 bits)
+.align 4 
 buffer:
-    .space 8
+    .space 16  
 
 .section .text
 _start:
@@ -14,9 +14,9 @@ _start:
     # Derive capability to buffer
     cspecialrw ct0, pcc, c0
     csetaddr ct0, ct0, a0
-    csetbounds ct0, ct0, 8
-    # should clear tag
     csetbounds ct0, ct0, 16
+    # should clear tag
+    csetbounds ct0, ct0, 32
 
     
     # ASCII 'A'

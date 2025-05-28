@@ -1,10 +1,10 @@
 .global _start
 .option arch, +zcheripurecap
 .section .data
-.align 2
+# 2^4 = 16 byte (128 bits)
+.align 4 
 buffer:
-    .space 8
-
+    .space 16  
 .section .text
 _start:
     # Get address of buffer
@@ -14,10 +14,10 @@ _start:
     # Create capability to buffer
     auipc    ct0, 0
     scaddr   ct0, ct0, a0
-    scbndsi  ct0, ct0, 8 
+    scbndsi  ct0, ct0, 16 
 
     # should clear tag
-    scbndsi  ct0, ct0, 16
+    scbndsi  ct0, ct0, 32
              
     # Will clear tag
     cbld     ct0, ct1, ct0

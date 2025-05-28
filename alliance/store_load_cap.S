@@ -1,10 +1,10 @@
 .global _start
 .option arch, +zcheripurecap
 .section .data
-# 2^3 = 8 bytes (64 bits) 
-.align 3   
+# 2^4 = 16 byte (128 bits)
+.align 4 
 buffer:
-    .space 8  
+    .space 16  
 .section .text
 _start:
     # Get address of buffer
@@ -13,7 +13,7 @@ _start:
     # Derive capability
     auipc    ct0, 0
     scaddr   ct0, ct0, a0         
-    scbndsi  ct0, ct0, 8         
+    scbndsi  ct0, ct0, 16         
 
     # Copy capability
     cmv      ct1, ct0   

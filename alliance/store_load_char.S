@@ -1,11 +1,10 @@
 .global _start
 .option arch, +zcheripurecap
 .section .data
-# 2^3 = 8 bytes (64 bits) 
-.align 3
+# 2^4 = 16 byte (128 bits)
+.align 4 
 buffer:
-    .space 8
-
+    .space 16  
 .section .text
 _start:
     # Get address of buffer
@@ -15,7 +14,7 @@ _start:
     # Derive capability
     auipc    ct0, 0
     scaddr   ct0, ct0, a0
-    scbndsi  ct0, ct0, 8   
+    scbndsi  ct0, ct0, 16  
 
     # Store char 'A'     
     li       a1, 0x41             
@@ -30,7 +29,7 @@ _start:
     # Making print cap
     auipc    ct1, 0
     scaddr   ct1, ct1, a3
-    scbndsi  ct1, ct1, 8   
+    scbndsi  ct1, ct1, 16   
 
     # Print loaded character
     sb       a2, 0(ct1)   

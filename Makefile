@@ -12,15 +12,15 @@ $(info Using CHERI-Alliance toolchain)
 	LD := $(LLVM_PATH)/ld.lld
 	DUMP := $(LLVM_PATH)/llvm-objdump
 	OBJCOPY := $(LLVM_PATH)/llvm-objcopy
-	QEMU_BASE_FLAGS := -machine virt -nographic -cpu rv32,Xcheri_purecap=on,cheri_v090=on -m 2G 
+	QEMU_BASE_FLAGS := -machine virt -nographic -cpu rv64,Xcheri_purecap=on,cheri_v090=on -m 2G 
 else
-$(info Using cheribuild toolchain)
+$(info Using CTSRD toolchain)
 	SDK := $(HOME)/cheri/output/sdk/bin
 	CLANG := $(SDK)/clang
 	LD := $(SDK)/ld.lld
 	OBJCOPY := $(SDK)/llvm-objcopy
 	GDB := $(SDK)/gdb
-	QEMU_BASE_FLAGS := -machine virt -nographic -cpu rv32 -m 2G 
+	QEMU_BASE_FLAGS := -machine virt -nographic -cpu rv64 -m 2G 
 endif
 
 LINKER := $(HOME)/cheri-baremetal-lab/linker.ld
@@ -30,11 +30,11 @@ EXE := $(TARGET).elf
 ifeq ($(CHERI),0) 
 $(info CHERI not enabled)
   QEMU := $(HOME)/cheri/output/sdk/bin/qemu-system-riscv32
-  ARCH_FLAGS := -target riscv32-unknown-elf -march=rv32i -mabi=ilp32
+  ARCH_FLAGS := -target riscv64-unknown-elf -march=rv64i -mabi=ilp64
 else
 $(info CHERI enabled)
-  QEMU := $(SDK)/qemu-system-riscv32cheri
-  ARCH_FLAGS := -target riscv32-unknown-elf -march=rv32ixcheri -mabi=il32pc64
+  QEMU := $(SDK)/qemu-system-riscv64cheri
+  ARCH_FLAGS := -target riscv64-unknown-elf -march=rv64ixcheri -mabi=il64pc128 
 
 endif
 

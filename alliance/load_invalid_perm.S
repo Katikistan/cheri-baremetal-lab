@@ -1,11 +1,10 @@
 .global _start
 .option arch, +zcheripurecap
 .section .data
-# 2^3 = 8 bytes (64 bits) 
-.align 2
+# 2^4 = 16 byte (128 bits)
+.align 4 
 buffer:
-    .space 8
-
+    .space 16  
 .section .text
 _start:
     # Get address of buffer
@@ -15,10 +14,9 @@ _start:
     # Derive capability to buffer
     auipc    ct0, 0
     scaddr   ct0, ct0, a0
-    scbndsi  ct0, ct0, 8          
+    scbndsi  ct0, ct0, 16          
     
-    li       a1, 0x4
-    li       a1, 0x2
+    li       a1, 
     # Clear load permissions         
     acperm   ct0, ct0, a1
     # ASCII 'A'

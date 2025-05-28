@@ -1,9 +1,9 @@
 .global _start 
 .section .data
-.align 3 
+# 2^4 = 16 byte (128 bits)
+.align 4 
 buffer:
-    .space 8 
-
+    .space 16  
 .section .text
 _start:
     # hart ID (0 or 1)
@@ -20,11 +20,11 @@ core0: # Create capability and store
     # Derive capability 
     cspecialrw ct0, pcc, c0     
     csetaddr ct0, ct0, a0    
-    csetbounds ct0, ct0, 8   
+    csetbounds ct0, ct0, 16   
 
     # Derive cap to be stored
     cspecialrw ct1, pcc, c0      
-    csetbounds ct1, ct1, 8   
+    csetbounds ct1, ct1, 16 
     # store ct1 with ct0
     sc.cap ct1, 0(ct0)
     ebreak   
@@ -35,7 +35,7 @@ core1: # load capability
 
     cspecialrw ct0, pcc, c0     
     csetaddr ct0, ct0, a0    
-    csetbounds ct0, ct0, 8   
+    csetbounds ct0, ct0, 16   
     
     cgettag a0, ct1
     lc.cap ct1, 0(ct0)
