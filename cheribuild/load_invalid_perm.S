@@ -16,12 +16,12 @@ _start:
     csetaddr   ct0, ct0, a0
     csetbounds ct0, ct0, 8
     
-    li         a3, 0xfffb
+    li         a1, 0xfffb
     # Clear load permissions
     candperm   ct0, ct0, a3 
     # ASCII 'A'
-    li         a1, 0x41
-    sb.cap     a1, 0(ct0)          
+    li         a2, 0x41
+    sb.cap     a2, 0(ct0)          
 
     # Load with ct0
     lb.cap     a3, 0(ct0)            

@@ -27,6 +27,8 @@ _start:
 
     csc        ct1, 0(ct0)          
     clc        ct2, 0(ct0)
+    # all are still valid. 
+    # csc and clc are not implemented corretcly
     cgettag    a0, ct0 
     cgettag    a1, ct1
     cgettag    a2, ct2              

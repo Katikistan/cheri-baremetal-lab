@@ -15,6 +15,9 @@ _start:
     auipc    ct0, 0
     scaddr   ct0, ct0, a0
     scbndsi  ct0, ct0, 8 
+
+    # should clear tag
+    scbndsi  ct0, ct0, 16
              
     # Will clear tag
     cbld     ct0, ct1, ct0

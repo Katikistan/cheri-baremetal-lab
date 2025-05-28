@@ -13,16 +13,17 @@ _start:
     addi     a0, a0, %lo(buffer)
 
     # Derive capability to buffer
-    auipc    ct1, 0
-    scaddr   ct1, ct1, t0
-    scbndsi  ct1, ct1, 8          
+    auipc    ct0, 0
+    scaddr   ct0, ct0, a0
+    scbndsi  ct0, ct0, 8          
     
-    li       t0, 0x4
+    li       a1, 0x4
+    li       a1, 0x2
     # Clear load permissions         
-    acperm   ct1, ct1, t0  
+    acperm   ct0, ct0, a1
     # ASCII 'A'
-    li       t0, 0x41           
-    sb       t0, 0(ct1)   
+    li       a2, 0x41           
+    sb       a2, 0(ct0)   
 
     # Load with ct0
-    lb       t2, 0(ct1)
+    lb       a3, 0(ct0)

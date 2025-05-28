@@ -15,8 +15,9 @@ _start:
     cspecialrw ct0, pcc, c0
     csetaddr ct0, ct0, a0
     csetbounds ct0, ct0, 8
+    # should clear tag
+    csetbounds ct0, ct0, 16
 
-    ccleartag ct0, ct0 
     
     # ASCII 'A'
     li      a1, 0x41
