@@ -2,7 +2,7 @@
 This repository contains minimal CHERI-RISCV64 assembly programs and a build system for running and debugging them on bare-metal QEMU. Intended for experimenting with CHERI's capability model. We have tested the CTSRD-CHERI and CHERI-Alliance toolchains 
 ## Academic Use
 
-This setup was developed for a computer science bachelor's project at Copenhagen University to explore CHERI's hardware-enforced memory safety. It enables writing and testing CHERI-enabled RISC-V assembly in a minimal bare-metal environment. We are testing to see if the CHERI-Alliance SDK is capable of running pure-metal CHERI RISCV 32 programs using emulated hardware in QEMU
+This setup was developed for a computer science bachelor's project at Copenhagen University to explore CHERI's hardware-enforced memory safety. It enables writing and testing CHERI-enabled RISC-V assembly in a minimal bare-metal environment. We are testing to see if the CHERI-Alliance SDK is capable of running pure-metal CHERI RISCV 64 programs using emulated hardware in QEMU
 
 ## CTSRD-CHERI Toolchain
 Developed by the CTSRD project (Cambridge, SRI International, and others)
