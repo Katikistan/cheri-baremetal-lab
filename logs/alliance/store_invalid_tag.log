@@ -1,0 +1,37 @@
+[0:0] Requested instruction logging @ 0000000000001000 
+[0:0] 0x0000000000001000:  00000297          auipcc          ct0,0           # 0x1000
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000000001000 t:ffffffffffffffff
+[0:0] 0x0000000000001004:  0002a61b          caddi           ca2,ct0,0
+    Write c12/ca2|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000000001000 t:ffffffffffffffff
+[0:0] 0x0000000000001008:  f1402573          csrrs           a0,mhartid,zero
+  x10/a0 <- 0000000000000000 (setting integer value)
+[0:0] 0x000000000000100c:  0282b583          cld             a1,40(ct0)
+    Memory Read [0000000000001028] = 00000000bf000000
+  x11/a1 <- 00000000bf000000 (setting integer value)
+[0:0] 0x0000000000001010:  0cb295b3          scaddr          ca1,ct0,a1
+    Write c11/ca1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:00000000bf000000 t:ffffffffffffffff
+[0:0] 0x0000000000001014:  0202b383          cld             t2,32(ct0)
+    Memory Read [0000000000001020] = 0000000080000000
+  x7/t2 <- 0000000080000000 (setting integer value)
+[0:0] 0x0000000000001018:  0c7292b3          scaddr          ct0,ct0,t2
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000080000000 t:ffffffffffffffff
+[0:0] 0x000000000000101c:  00028067          jr              t0
+[0:0] 0x0000000080000000:  01000517          auipcc          ca0,16777216    # 0x81000000
+    Write c10/ca0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000081000000 t:ffffffffffffffff
+[0:0] 0x0000000080000004:  00050513          mv              a0,a0
+  x10/a0 <- 0000000081000000 (setting integer value)
+[0:0] 0x0000000080000008:  00000297          auipcc          ct0,0           # 0x80000008
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000080000008 t:ffffffffffffffff
+[0:0] 0x000000008000000c:  0ca292b3          scaddr          ct0,ct0,a0
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000081000000 t:ffffffffffffffff
+[0:0] 0x0000000080000010:  0502d293          scbdsi          ct0,ct0,16
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 a:0000000081000000 t:0000000081000010
+[0:0] 0x0000000080000014:  0622d293          scbdsi          ct0,ct0,32
+    Write c5/ct0|v:0 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 a:0000000081000000 t:0000000081000020
+[0:0] 0x0000000080000018:  0c5352b3          cbld            ct0,ct1,ct0
+    Write c5/ct0|v:0 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 a:0000000081000000 t:0000000081000020
+[0:0] 0x000000008000001c:  04100593          addi            a1,zero,65
+  x11/a1 <- 0000000000000041 (setting integer value)
+Got CHERI trap Tag Violation type Data Violation, caused by register 5
+riscv_cpu_do_interrupt: hart:0, async:0, cause:000000000000001c, epc:0x0000000080000020, tval:0x0000000081000000, desc=cheri_fault
+riscv_cpu_do_interrupt: hart:0, async:0, cause:0000000000000001, epc:0x0000000000000000, tval:0x0000000000000000, desc=fault_fetch

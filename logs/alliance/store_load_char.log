@@ -1,0 +1,56 @@
+[0:0] Requested instruction logging @ 0000000000001000 
+[0:0] 0x0000000000001000:  00000297          auipcc          ct0,0           # 0x1000
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000000001000 t:ffffffffffffffff
+[0:0] 0x0000000000001004:  0002a61b          caddi           ca2,ct0,0
+    Write c12/ca2|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000000001000 t:ffffffffffffffff
+[0:0] 0x0000000000001008:  f1402573          csrrs           a0,mhartid,zero
+  x10/a0 <- 0000000000000000 (setting integer value)
+[0:0] 0x000000000000100c:  0282b583          cld             a1,40(ct0)
+    Memory Read [0000000000001028] = 00000000bf000000
+  x11/a1 <- 00000000bf000000 (setting integer value)
+[0:0] 0x0000000000001010:  0cb295b3          scaddr          ca1,ct0,a1
+    Write c11/ca1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:00000000bf000000 t:ffffffffffffffff
+[0:0] 0x0000000000001014:  0202b383          cld             t2,32(ct0)
+    Memory Read [0000000000001020] = 0000000080000000
+  x7/t2 <- 0000000080000000 (setting integer value)
+[0:0] 0x0000000000001018:  0c7292b3          scaddr          ct0,ct0,t2
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000080000000 t:ffffffffffffffff
+[0:0] 0x000000000000101c:  00028067          jr              t0
+[0:0] 0x0000000080000000:  01000517          auipcc          ca0,16777216    # 0x81000000
+    Write c10/ca0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000081000000 t:ffffffffffffffff
+[0:0] 0x0000000080000004:  00050513          mv              a0,a0
+  x10/a0 <- 0000000081000000 (setting integer value)
+[0:0] 0x0000000080000008:  00000297          auipcc          ct0,0           # 0x80000008
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000080000008 t:ffffffffffffffff
+[0:0] 0x000000008000000c:  0ca292b3          scaddr          ct0,ct0,a0
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000081000000 t:ffffffffffffffff
+[0:0] 0x0000000080000010:  0502d293          scbdsi          ct0,ct0,16
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 a:0000000081000000 t:0000000081000010
+[0:0] 0x0000000080000014:  04100593          addi            a1,zero,65
+  x11/a1 <- 0000000000000041 (setting integer value)
+[0:0] 0x0000000080000018:  00b28023          sb              a1,0(ct0)
+    Memory Write [0000000081000000] = 41
+[0:0] 0x000000008000001c:  00028603          clb             a2,0(ct0)
+    Memory Read [0000000081000000] = 41
+  x12/a2 <- 0000000000000041 (setting integer value)
+[0:0] 0x0000000080000020:  100006b7          lui             a3,65536
+  x13/a3 <- 0000000010000000 (setting integer value)
+[0:0] 0x0000000080000024:  00000317          auipcc          ct1,0           # 0x80000024
+    Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000080000024 t:ffffffffffffffff
+[0:0] 0x0000000080000028:  0cd31333          scaddr          ct1,ct1,a3
+    Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000010000000 t:ffffffffffffffff
+[0:0] 0x000000008000002c:  05035313          scbdsi          ct1,ct1,16
+    Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000010000000 a:0000000010000000 t:0000000010000010
+[0:0] 0x0000000080000030:  00c30023          sb              a2,0(ct1)
+    Memory Write [0000000010000000] = 41
+[0:0] 0x0000000080000034:  02000713          addi            a4,zero,32
+  x14/a4 <- 0000000000000020 (setting integer value)
+[0:0] 0x0000000080000038:  00e30023          sb              a4,0(ct1)
+    Memory Write [0000000010000000] = 20
+[0:0] 0x000000008000003c:  100307b3          gctag           a5,ct1
+  x15/a5 <- 0000000000000001 (setting integer value)
+[0:0] 0x0000000080000040:  03078793          addi            a5,a5,48
+  x15/a5 <- 0000000000000031 (setting integer value)
+[0:0] 0x0000000080000044:  00f30023          sb              a5,0(ct1)
+    Memory Write [0000000010000000] = 31
+riscv_cpu_do_interrupt: hart:0, async:0, cause:0000000000000002, epc:0x0000000080000048, tval:0x0000000000000000, desc=illegal_instruction
