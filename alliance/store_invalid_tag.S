@@ -8,8 +8,8 @@ buffer:
 .section .text
 _start:
     # Get address of buffer
-    lui      a0, %hi(buffer)
-    addi     a0, a0, %lo(buffer)
+    auipc  ca0, %pcrel_hi(buffer)
+    addi   a0, a0, %lo(buffer)
 
     # Create capability to buffer
     auipc    ct0, 0

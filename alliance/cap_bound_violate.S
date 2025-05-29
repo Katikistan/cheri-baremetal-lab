@@ -7,8 +7,8 @@ buffer:
     .space 16  
 .section .text
 _start:
-    lui      a0, %hi(buffer)
-    addi     a0, a0, %lo(buffer)
+    auipc  ca0, %pcrel_hi(buffer)
+    addi   a0, a0, %lo(buffer)
 
     # Derive capability
     auipc    ct0, 0

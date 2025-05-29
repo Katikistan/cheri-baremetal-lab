@@ -1,4 +1,5 @@
 .global _start
+.global buffer
 .section .data
 # 2^4 = 16 byte (128 bits)
 .align 4 
@@ -6,9 +7,9 @@ buffer:
     .space 16  
 .section .text
 _start:
-    lui     a0, %hi(buffer)
-    addi    a0, a0, %lo(buffer)
-
+    auipcc  ca0, %pcrel_hi(buffer)
+    addi   a0, a0, %lo(buffer)
+    
     # Derive capability 
     cspecialrw ct0, pcc, c0   
     # Set ct0 address to buffer  

@@ -8,15 +8,15 @@ buffer:
 .section .text
 _start:
     # Get address of buffer
-    lui      a0, %hi(buffer)
-    addi     a0, a0, %lo(buffer)
+    auipc  ca0, %pcrel_hi(buffer)
+    addi   a0, a0, %lo(buffer)
 
     # Derive capability to buffer
     auipc    ct0, 0
     scaddr   ct0, ct0, a0
     scbndsi  ct0, ct0, 16          
     
-    li       a1, 
+    li       a1, 0x3b
     # Clear load permissions         
     acperm   ct0, ct0, a1
     # ASCII 'A'

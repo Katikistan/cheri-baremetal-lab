@@ -7,8 +7,8 @@ buffer:
 .section .text
 _start:
     # Get address of buffer
-    lui      a0, %hi(buffer)        
-    addi     a0, a0, %lo(buffer)   
+    auipcc  ca0, %pcrel_hi(buffer)
+    addi    a0, a0, %lo(buffer)
 
     # Derive capability 
     cspecialrw ct0, pcc, c0     

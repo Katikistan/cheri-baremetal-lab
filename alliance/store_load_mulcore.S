@@ -14,8 +14,8 @@ _start:
 
 core0:
     # Core 0: create capability and store
-    lui      a0, %hi(buffer)
-    addi     a0, a0, %lo(buffer)
+    auipc  ca0, %pcrel_hi(buffer)
+    addi   a0, a0, %lo(buffer)
 
     # Derive a capability to buffer
     auipc    ct0, 0

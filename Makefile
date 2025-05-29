@@ -34,7 +34,7 @@ $(info CHERI not enabled)
 else
 $(info CHERI enabled)
   QEMU := $(SDK)/qemu-system-riscv64cheri
-  ARCH_FLAGS := -target riscv64-unknown-elf -march=rv64ixcheri -mabi=il64pc128 
+  ARCH_FLAGS := -target riscv64-unknown-elf -march=rv64gcxcheri -mabi=l64pc128 
 
 endif
 
