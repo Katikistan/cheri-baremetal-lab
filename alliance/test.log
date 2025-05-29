@@ -26,3 +26,6 @@
   x11/a1 <- 00000000000703e3 (setting integer value)
 [0:0] 0x0000000080000010:  0ca2a2b3          acperm          ct0,ct0,a0
     Write c5/ct0|v:1 sdp:0 m:0 ap: 3 cl:0 ct:0 b:0000000080000000 a:0000000080000000 t:0000000080000020
+[0:0] 0x0000000080000014:  10128633          gcperm          a2,ct0
+  x12/a2 <- 0000000000000021 (setting integer value)
+riscv_cpu_do_interrupt: hart:0, async:0, cause:0000000000000002, epc:0x0000000080000018, tval:0x0000000000000000, desc=illegal_instruction
