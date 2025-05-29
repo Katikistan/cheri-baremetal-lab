@@ -40,7 +40,7 @@ endif
 
 CFLAGS := $(ARCH_FLAGS) -g
 
-QEMU_FLAGS := $(QEMU_BASE_FLAGS) -d instr,int -D $(TARGET).log -smp $(CORES) -bios none -kernel $(EXE) -S -s 
+QEMU_FLAGS := $(QEMU_BASE_FLAGS) -d instr,int -D $(TARGET).log -smp $(CORES) -bios none -kernel $(EXE) -s -S
 
 .PHONY: build run gdb clean
 
