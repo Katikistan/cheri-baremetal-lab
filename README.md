@@ -133,9 +133,7 @@ x/8i $pc                  # Show upcoming instructions
 info threads              # List all active cores/threads
 thread <n>                # Switch to thread/core n
 thread apply all info reg # Show registers for all threads
-set $pc = 0x80000000      # Sets program counter to where start of program is 
-
-
+set scheduler-locking on  # Make sure only one thread is running at a time
 ```
 
 ## File Structure

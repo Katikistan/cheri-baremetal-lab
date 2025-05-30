@@ -32,8 +32,8 @@
     Write c5/ct0|v:1 s:0 p:00078fff f:0 b:0000000000000000 l:ffffffffffffffff
              |o:0000000081000000 t:000000000003ffff
 [0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x0000000080000010:  0102a2db          csetbounds      ct0,ct0,16
-    Write c5/ct0|v:1 s:0 p:00078fff f:0 b:0000000081000000 l:0000000000000010
+[0:0] 0x0000000080000010:  0012a2db          csetbounds      ct0,ct0,1
+    Write c5/ct0|v:1 s:0 p:00078fff f:0 b:0000000081000000 l:0000000000000001
              |o:0000000000000000 t:000000000003ffff
 [0:0] 0x0000000000000000:  0000              illegal         
 [0:0] 0x0000000080000014:  04100593          addi            a1,zero,65
@@ -57,8 +57,8 @@
     Write c6/ct1|v:1 s:0 p:00078fff f:0 b:0000000000000000 l:ffffffffffffffff
              |o:0000000010000000 t:000000000003ffff
 [0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x000000008000002c:  0083235b          csetbounds      ct1,ct1,8
-    Write c6/ct1|v:1 s:0 p:00078fff f:0 b:0000000010000000 l:0000000000000008
+[0:0] 0x000000008000002c:  0013235b          csetbounds      ct1,ct1,1
+    Write c6/ct1|v:1 s:0 p:00078fff f:0 b:0000000010000000 l:0000000000000001
              |o:0000000000000000 t:000000000003ffff
 [0:0] 0x0000000000000000:  0000              illegal         
 [0:0] 0x0000000080000030:  f8c3045b          illegal         
@@ -79,3 +79,15 @@
 [0:0] 0x0000000080000044:  f8f3045b          illegal         
     Memory Write [0000000010000000] = 31
 [0:0] 0x0000000000000000:  0000              illegal         
+riscv_cpu_do_interrupt: hart:0, async:0, cause:0000000000000003, epc:0x0000000080000048, tval:0x0000000000000000, desc=breakpoint
+[0:0] 0x0000000080000048:  9002              ebreak          
+-> Switch to Machine mode
+-> Exception #3 vector 0x0000000000000000 fault-addr 0x0000000000000000
+    Write mstatus = 0000000a00001800
+    Write mcause = 0000000000000003
+    Write MEPCC|v:1 s:0 p:00078fff f:0 b:0000000000000000 l:ffffffffffffffff
+             |o:0000000080000048 t:000000000003ffff
+    Write mbadaddr = 0000000000000000
+    Write mtval2 = 0000000000000000
+    Write PCC|v:1 s:0 p:00078fff f:0 b:0000000000000000 l:ffffffffffffffff
+             |o:0000000000000000 t:000000000003ffff

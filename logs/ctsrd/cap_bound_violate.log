@@ -17,6 +17,7 @@
     Write x5/t0 = 0000000080000000
 [0:0] 0x0000000000000000:  0000              illegal         
 [0:0] 0x0000000000001014:  00028067          jr              t0
+[0:0] 0x0000000000000000:  0000              illegal         
 [0:0] 0x0000000080000000:  01000517          auipc           a0,16777216     # 0x81000000
     Write x10/a0 = 0000000081000000
 [0:0] 0x0000000000000000:  0000              illegal         
@@ -31,21 +32,17 @@
     Write c5/ct0|v:1 s:0 p:00078fff f:0 b:0000000000000000 l:ffffffffffffffff
              |o:0000000081000000 t:000000000003ffff
 [0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x0000000080000010:  0042a2db          csetbounds      ct0,ct0,4
-    Write c5/ct0|v:1 s:0 p:00078fff f:0 b:0000000081000000 l:0000000000000004
+[0:0] 0x0000000080000010:  0012a2db          csetbounds      ct0,ct0,1
+    Write c5/ct0|v:1 s:0 p:00078fff f:0 b:0000000081000000 l:0000000000000001
              |o:0000000000000000 t:000000000003ffff
 [0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x0000000080000014:  4591              addi            a1,zero,4
-    Write x11/a1 = 0000000000000004
+[0:0] 0x0000000080000014:  002292db          cincoffset      ct0,ct0,2
+    Write c5/ct0|v:1 s:0 p:00078fff f:0 b:0000000081000000 l:0000000000000001
+             |o:0000000000000002 t:000000000003ffff
 [0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x0000000080000016:  1eb2835b          csetoffset      ct1,ct0,a1
-    Write c6/ct1|v:1 s:0 p:00078fff f:0 b:0000000081000000 l:0000000000000004
-             |o:0000000000000004 t:000000000003ffff
+[0:0] 0x0000000080000018:  04100593          addi            a1,zero,65
+    Write x11/a1 = 0000000000000041
 [0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x000000008000001a:  0043235b          csetbounds      ct1,ct1,4
-    Write c6/ct1|v:0 s:0 p:00078fff f:0 b:0000000081000004 l:0000000000000004
-             |o:0000000000000000 t:000000000003ffff
-[0:0] 0x0000000000000000:  0000              illegal         
-Failed capability bounds check: addr=0000000081000000 base=0000000081000000 top=0000000081000004
+Failed capability bounds check: addr=0000000081000002 base=0000000081000000 top=0000000081000001
 Got CHERI trap Length Violation caused by register 5
-riscv_cpu_do_interrupt: hart:0, async:0, cause:000000000000001c, epc:0x000000008000001e, tval:0x00000000000000a1, desc=cheri_fault
+riscv_cpu_do_interrupt: hart:0, async:0, cause:000000000000001c, epc:0x000000008000001c, tval:0x00000000000000a1, desc=cheri_fault
