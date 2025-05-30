@@ -16,7 +16,8 @@ _start:
     
     # Clear load permissions
     li         a1, 0xfffb
-    candperm   ct0, ct0, a3 
+    candperm   ct0, ct0, a1 
+    cgetperm a4, ct0
 
     # ASCII 'A'
     li         a2, 0x41

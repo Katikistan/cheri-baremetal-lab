@@ -1,21 +1,20 @@
-[0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x0000000080000000:  01000517          auipc           a0,16777216     # 0x81000000
+[0:0] auipc           a0,16777216     # 0x81000000
     Write x10/a0 = 0000000081000000
-[0:0] 0x0000000080000004:  00050513          mv              a0,a0
+[0:0] mv              a0,a0
     Write x10/a0 = 0000000081000000
-[0:0] 0x0000000080000008:  020002db          cspecialrw      ct0,scr0,cnull
+[0:0] cspecialrw      ct0,scr0,cnull
     Write c5/ct0|v:1 s:0 p:00078fff f:0 b:0000000000000000 l:ffffffffffffffff
              |o:0000000080000008 t:000000000003ffff
-[0:0] 0x000000008000000c:  20a282db          csetaddr        ct0,ct0,a0
+[0:0] csetaddr        ct0,ct0,a0
     Write c5/ct0|v:1 s:0 p:00078fff f:0 b:0000000000000000 l:ffffffffffffffff
              |o:0000000081000000 t:000000000003ffff
-[0:0] 0x0000000080000010:  0012a2db          csetbounds      ct0,ct0,1
+[0:0] csetbounds      ct0,ct0,1
     Write c5/ct0|v:1 s:0 p:00078fff f:0 b:0000000081000000 l:0000000000000001
              |o:0000000000000000 t:000000000003ffff
-[0:0] 0x0000000080000014:  0022a2db          csetbounds      ct0,ct0,2
+[0:0] csetbounds      ct0,ct0,2
     Write c5/ct0|v:0 s:0 p:00078fff f:0 b:0000000081000000 l:0000000000000002
              |o:0000000000000000 t:000000000003ffff
-[0:0] 0x0000000080000018:  04100593          addi            a1,zero,65
+[0:0] addi            a1,zero,65
     Write x11/a1 = 0000000000000041
 Got CHERI trap Tag Violation caused by register 5
 riscv_cpu_do_interrupt: hart:0, async:0, cause:000000000000001c, epc:0x000000008000001c, tval:0x00000000000000a2, desc=cheri_fault

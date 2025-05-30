@@ -1,69 +1,44 @@
-[0:0] Requested instruction logging @ 0000000000001000 
-[0:0] 0x0000000000001000:  00000297          auipc           t0,0            # 0x1000
-    Write x5/t0 = 0000000000001000
-[0:0] 0x0000000000001004:  02828613          addi            a2,t0,40
-    Write x12/a2 = 0000000000001028
-[0:0] 0x0000000000001008:  f1402573          csrrs           a0,mhartid,zero
-    Write x10/a0 = 0000000000000000
-[0:0] 0x000000000000100c:  0202b583          ld              a1,32(t0)
-    Memory Read [0000000000001020] = 00
-    Write x11/a1 = 00000000bf000000
-[0:0] 0x0000000000001010:  0182b283          ld              t0,24(t0)
-    Memory Read [0000000000001018] = 00
-    Write x5/t0 = 0000000080000000
-[0:0] 0x0000000000001014:  00028067          jr              t0
-[0:0] 0x0000000080000000:  01000517          auipc           a0,16777216     # 0x81000000
+[0:0] auipc           a0,16777216     # 0x81000000
     Write x10/a0 = 0000000081000000
-[0:0] 0x0000000080000004:  00050513          mv              a0,a0
+[0:0] mv              a0,a0
     Write x10/a0 = 0000000081000000
-[0:0] 0x0000000080000008:  020002db          cspecialrw      ct0,scr0,cnull
+[0:0] cspecialrw      ct0,scr0,cnull
     Write c5/ct0|v:1 s:0 p:00078fff f:0 b:0000000000000000 l:ffffffffffffffff
              |o:0000000080000008 t:000000000003ffff
-[0:0] 0x000000008000000c:  20a282db          csetaddr        ct0,ct0,a0
+[0:0] csetaddr        ct0,ct0,a0
     Write c5/ct0|v:1 s:0 p:00078fff f:0 b:0000000000000000 l:ffffffffffffffff
              |o:0000000081000000 t:000000000003ffff
-[0:0] 0x0000000080000010:  0102a2db          csetbounds      ct0,ct0,16
+[0:0] csetbounds      ct0,ct0,16
     Write c5/ct0|v:1 s:0 p:00078fff f:0 b:0000000081000000 l:0000000000000010
              |o:0000000000000000 t:000000000003ffff
-[0:0] 0x0000000080000014:  4591              addi            a1,zero,4
+[0:0] addi            a1,zero,4
     Write x11/a1 = 0000000000000004
-[0:0] 0x0000000080000016:  1eb2835b          csetoffset      ct1,ct0,a1
+[0:0] csetoffset      ct1,ct0,a1
     Write c6/ct1|v:1 s:0 p:00078fff f:0 b:0000000081000000 l:0000000000000010
              |o:0000000000000004 t:000000000003ffff
-[0:0] 0x000000008000001a:  0043235b          csetbounds      ct1,ct1,4
+[0:0] csetbounds      ct1,ct1,4
     Write c6/ct1|v:1 s:0 p:00078fff f:0 b:0000000081000004 l:0000000000000004
              |o:0000000000000000 t:000000000003ffff
-[0:0] 0x000000008000001e:  4681              mv              a3,zero
+[0:0] mv              a3,zero
     Write x13/a3 = 0000000000000000
-[0:0] 0x0000000080000020:  1ad282db          candperm        ct0,ct0,a3
+[0:0] candperm        ct0,ct0,a3
     Write c5/ct0|v:1 s:0 p:00000000 f:0 b:0000000081000000 l:0000000000000010
              |o:0000000000000000 t:000000000003ffff
-[0:0] 0x0000000080000024:  feb282db          ccleartag       ct0,ct0
+[0:0] ccleartag       ct0,ct0
     Write c5/ct0|v:0 s:0 p:00000000 f:0 b:0000000081000000 l:0000000000000010
              |o:0000000000000000 t:000000000003ffff
-[0:0] 0x0000000080000028:  0062c023          sc              ct1,0(t0)
+[0:0] sc              ct1,0(t0)
     Cap Memory Write [0000000081000000] = v:1 PESBT:ffff000004038000 Cursor:0000000081000004
     Cap Tag Write [0000000081000000/1000000] 0 -> 1
-[0:0] 0x000000008000002c:  0002a38f          lc              ct2,0(t0)
+[0:0] lc              ct2,0(t0)
     Cap Memory Read [0000000081000000] = v:1 PESBT:ffff000004038000 Cursor:0000000081000004
     Write c7/ct2|v:1 s:0 p:00078fff f:0 b:0000000081000004 l:0000000000000004
              |o:0000000000000000 t:000000000003ffff
     Cap Tag Read [0000000081000000/1000000] -> 1
-[0:0] 0x0000000080000030:  fe42855b          cgettag         a0,ct0
+[0:0] cgettag         a0,ct0
     Write x10/a0 = 0000000000000000
-[0:0] 0x0000000080000034:  fe4305db          cgettag         a1,ct1
+[0:0] cgettag         a1,ct1
     Write x11/a1 = 0000000000000001
-[0:0] 0x0000000080000038:  fe43865b          cgettag         a2,ct2
+[0:0] cgettag         a2,ct2
     Write x12/a2 = 0000000000000001
 riscv_cpu_do_interrupt: hart:0, async:0, cause:0000000000000003, epc:0x000000008000003c, tval:0x0000000000000000, desc=breakpoint
-[0:0] 0x000000008000003c:  9002              ebreak          
--> Switch to Machine mode
--> Exception #3 vector 0x0000000000000000 fault-addr 0x0000000000000000
-    Write mstatus = 0000000a00001800
-    Write mcause = 0000000000000003
-    Write MEPCC|v:1 s:0 p:00078fff f:0 b:0000000000000000 l:ffffffffffffffff
-             |o:000000008000003c t:000000000003ffff
-    Write mbadaddr = 0000000000000000
-    Write mtval2 = 0000000000000000
-    Write PCC|v:1 s:0 p:00078fff f:0 b:0000000000000000 l:ffffffffffffffff
-             |o:0000000000000000 t:000000000003ffff
