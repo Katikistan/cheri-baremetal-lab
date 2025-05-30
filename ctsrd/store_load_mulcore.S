@@ -7,15 +7,15 @@ buffer:
     .space 16  
 .section .text
 _start:
+    auipcc  ca0, %pcrel_hi(buffer)
+    addi   a0, a0, %lo(buffer)
     # hart ID (0 or 1)
-    csrr a0, mhartid       
+    csrr a1, mhartid       
     li   t0, 0
-    beq  a0, t0, core0
+    beq  a1, t0, core0
     j core1
 
 core0: # Create capability and store
-    auipcc  ca0, %pcrel_hi(buffer)
-    addi   a0, a0, %lo(buffer)
 
     # Derive a capability to buffer
     cspecialrw ct0, pcc, c0     
@@ -30,8 +30,6 @@ core0: # Create capability and store
     ebreak # switch to other thread in gdb  
   
 core1: # load capability
-    auipcc  ca0, %pcrel_hi(buffer)
-    addi    a0, a0, %lo(buffer)
      # Derive a capability to load from buffer
     cspecialrw ct0, pcc, c0     
     csetaddr   ct0, ct0, a0    

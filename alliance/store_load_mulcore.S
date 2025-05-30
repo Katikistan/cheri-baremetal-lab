@@ -7,6 +7,8 @@ buffer:
     .space 16  
 .section .text
 _start:
+    auipc  ca0, %pcrel_hi(buffer)
+    addi   a0, a0, %lo(buffer)
     # hart ID (0 or 1)
     csrr a1, mhartid      
     li t1, 0
@@ -14,8 +16,6 @@ _start:
     j core1
 
 core0: # Create capability and store
-    auipc  ca0, %pcrel_hi(buffer)
-    addi   a0, a0, %lo(buffer)
 
     # Derive a capability to buffer
     auipc    ct0, 0
@@ -30,8 +30,6 @@ core0: # Create capability and store
     ebreak # switch to other thread in gdb          
 
 core1:
-    auipc  ca0, %pcrel_hi(buffer)
-    addi   a0, a0, %lo(buffer)
     # Derive a capability to load from buffer
     auipc    ct0, 0
     scaddr   ct0, ct0, a0     
