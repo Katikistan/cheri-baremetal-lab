@@ -24,12 +24,12 @@
     Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000080000008 t:ffffffffffffffff
 [0:0] 0x000000008000000c:  0ca292b3          scaddr          ct0,ct0,a0
     Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000081000000 t:ffffffffffffffff
-[0:0] 0x0000000080000010:  0502d293          scbdsi          ct0,ct0,16
-    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 a:0000000081000000 t:0000000081000010
+[0:0] 0x0000000080000010:  0412d293          scbdsi          ct0,ct0,1
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 a:0000000081000000 t:0000000081000001
 [0:0] 0x0000000080000014:  03b00593          addi            a1,zero,59
   x11/a1 <- 000000000000003b (setting integer value)
 [0:0] 0x0000000080000018:  0cb2a2b3          acperm          ct0,ct0,a1
-    Write c5/ct0|v:1 sdp:0 m:0 ap: 3 cl:0 ct:0 b:0000000081000000 a:0000000081000000 t:0000000081000010
+    Write c5/ct0|v:1 sdp:0 m:0 ap: 3 cl:0 ct:0 b:0000000081000000 a:0000000081000000 t:0000000081000001
 [0:0] 0x000000008000001c:  04100613          addi            a2,zero,65
   x12/a2 <- 0000000000000041 (setting integer value)
 [0:0] 0x0000000080000020:  00c28023          sb              a2,0(ct0)

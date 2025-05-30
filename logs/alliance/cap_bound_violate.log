@@ -24,10 +24,12 @@
     Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000080000008 t:ffffffffffffffff
 [0:0] 0x000000008000000c:  0ca292b3          scaddr          ct0,ct0,a0
     Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000081000000 t:ffffffffffffffff
-[0:0] 0x0000000080000010:  0442d293          scbdsi          ct0,ct0,4
-    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 a:0000000081000000 t:0000000081000004
-[0:0] 0x0000000080000014:  0c028333          cadd            ct1,ct0,zero
-    Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 a:0000000081000000 t:0000000081000004
-Failed capability bounds check: addr=0000000081000000 base=0000000081000000 top=0000000081000004
+[0:0] 0x0000000080000010:  0412d293          scbdsi          ct0,ct0,1
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 a:0000000081000000 t:0000000081000001
+[0:0] 0x0000000080000014:  0022a29b          caddi           ct0,ct0,2
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 a:0000000081000002 t:0000000081000001
+[0:0] 0x0000000080000018:  04100593          addi            a1,zero,65
+  x11/a1 <- 0000000000000041 (setting integer value)
+Failed capability bounds check: addr=0000000081000002 base=0000000081000000 top=0000000081000001
 Got CHERI trap Length Violation type Data Violation, caused by register 5
-riscv_cpu_do_interrupt: hart:0, async:0, cause:000000000000001c, epc:0x0000000080000018, tval:0x0000000081000000, desc=cheri_fault
+riscv_cpu_do_interrupt: hart:0, async:0, cause:000000000000001c, epc:0x000000008000001c, tval:0x0000000081000002, desc=cheri_fault

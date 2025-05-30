@@ -24,8 +24,8 @@
     Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000080000008 t:ffffffffffffffff
 [0:0] 0x000000008000000c:  0ca292b3          scaddr          ct0,ct0,a0
     Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000081000000 t:ffffffffffffffff
-[0:0] 0x0000000080000010:  0502d293          scbdsi          ct0,ct0,16
-    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 a:0000000081000000 t:0000000081000010
+[0:0] 0x0000000080000010:  0412d293          scbdsi          ct0,ct0,1
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 a:0000000081000000 t:0000000081000001
 [0:0] 0x0000000080000014:  04100593          addi            a1,zero,65
   x11/a1 <- 0000000000000041 (setting integer value)
 [0:0] 0x0000000080000018:  00b28023          sb              a1,0(ct0)
@@ -39,8 +39,8 @@
     Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000080000024 t:ffffffffffffffff
 [0:0] 0x0000000080000028:  0cd31333          scaddr          ct1,ct1,a3
     Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 a:0000000010000000 t:ffffffffffffffff
-[0:0] 0x000000008000002c:  05035313          scbdsi          ct1,ct1,16
-    Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000010000000 a:0000000010000000 t:0000000010000010
+[0:0] 0x000000008000002c:  04135313          scbdsi          ct1,ct1,1
+    Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000010000000 a:0000000010000000 t:0000000010000001
 [0:0] 0x0000000080000030:  00c30023          sb              a2,0(ct1)
     Memory Write [0000000010000000] = 41
 [0:0] 0x0000000080000034:  02000713          addi            a4,zero,32
@@ -53,4 +53,4 @@
   x15/a5 <- 0000000000000031 (setting integer value)
 [0:0] 0x0000000080000044:  00f30023          sb              a5,0(ct1)
     Memory Write [0000000010000000] = 31
-riscv_cpu_do_interrupt: hart:0, async:0, cause:0000000000000002, epc:0x0000000080000048, tval:0x0000000000000000, desc=illegal_instruction
+riscv_cpu_do_interrupt: hart:0, async:0, cause:0000000000000003, epc:0x0000000080000048, tval:0x0000000000000000, desc=breakpoint

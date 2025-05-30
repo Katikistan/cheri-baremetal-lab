@@ -41,4 +41,4 @@
   x11/a1 <- 0000000000000001 (setting integer value)
 [0:0] 0x0000000080000028:  10038633          gctag           a2,ct2
   x12/a2 <- 0000000000000001 (setting integer value)
-riscv_cpu_do_interrupt: hart:0, async:0, cause:0000000000000002, epc:0x000000008000002c, tval:0x0000000000000000, desc=illegal_instruction
+riscv_cpu_do_interrupt: hart:0, async:0, cause:0000000000000003, epc:0x000000008000002c, tval:0x0000000000000000, desc=breakpoint
