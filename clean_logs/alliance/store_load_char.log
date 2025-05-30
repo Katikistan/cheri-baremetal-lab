@@ -1,0 +1,45 @@
+[0:0] auipcc          ca0,16777216    # 0x81000000
+    Write c10/ca0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 
+    a:0000000081000000 t:ffffffffffffffff
+[0:0] mv              a0,a0
+  x10/a0 <- 0000000081000000 (setting integer value)
+[0:0] 0x0000000080000008:  00000297          auipcc          ct0,0           # 0x80000008
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 
+    a:0000000080000008 t:ffffffffffffffff
+[0:0] 0x000000008000000c:  0ca292b3          scaddr          ct0,ct0,a0
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 
+    a:0000000081000000 t:ffffffffffffffff
+[0:0] 0x0000000080000010:  0412d293          scbdsi          ct0,ct0,1
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 
+    a:0000000081000000 t:0000000081000001
+[0:0] addi            a1,zero,65
+  x11/a1 <- 0000000000000041 (setting integer value)
+[0:0] sb              a1,0(ct0)
+    Memory Write [0000000081000000] = 41
+[0:0] clb             a2,0(ct0)
+    Memory Read [0000000081000000] = 41
+  x12/a2 <- 0000000000000041 (setting integer value)
+[0:0] lui             a3,65536
+  x13/a3 <- 0000000010000000 (setting integer value)
+[0:0] auipcc          ct1,0           # 0x80000024
+    Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 
+    a:0000000080000024 t:ffffffffffffffff
+[0:0] scaddr          ct1,ct1,a3
+    Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 
+    a:0000000010000000 t:ffffffffffffffff
+[0:0] scbdsi          ct1,ct1,1
+    Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000010000000 
+    a:0000000010000000 t:0000000010000001
+[0:0] sb              a2,0(ct1)
+    Memory Write [0000000010000000] = 41
+[0:0] addi            a4,zero,32
+  x14/a4 <- 0000000000000020 (setting integer value)
+[0:0] sb              a4,0(ct1)
+    Memory Write [0000000010000000] = 20
+[0:0] gctag           a5,ct1
+  x15/a5 <- 0000000000000001 (setting integer value)
+[0:0] addi            a5,a5,48
+  x15/a5 <- 0000000000000031 (setting integer value)
+[0:0] sb              a5,0(ct1)
+    Memory Write [0000000010000000] = 31
+riscv_cpu_do_interrupt: hart:0, async:0, cause:0000000000000003, epc:0x0000000080000048, tval:0x0000000000000000, desc=breakpoint

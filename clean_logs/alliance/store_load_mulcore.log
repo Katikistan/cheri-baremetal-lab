@@ -1,0 +1,61 @@
+[0:0] auipcc          ca0,16777216    # 0x81000000
+    Write c10/ca0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 
+    a:0000000081000000 t:ffffffffffffffff
+[0:0] mv              a0,a0
+  x10/a0 <- 0000000081000000 (setting integer value)
+[0:0] csrrs           a1,mhartid,zero
+  x11/a1 <- 0000000000000000 (setting integer value)
+[0:0] mv              t1,zero
+  x6/t1 <- 0000000000000000 (setting integer value)
+[0:0] beq             a1,t1,6         # 0x80000014
+[0:0] auipcc          ct0,0           # 0x80000014
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 
+    a:0000000080000014 t:ffffffffffffffff
+[0:0] scaddr          ct0,ct0,a0
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 
+    a:0000000081000000 t:ffffffffffffffff
+[0:0] cadd            ct1,ct0,zero
+    Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 
+    a:0000000081000000 t:0000000081000010
+[0:0] caddi           ct1,ct1,4
+    Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 
+    a:0000000081000004 t:0000000081000010
+[0:0] scbdsi          ct1,ct1,4
+    Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000004 
+    a:0000000081000004 t:0000000081000008
+[0:0] csc             ct1,0(ct0)
+    Cap Memory Write [0000000081000000] = v:1 PESBT:01e3f00004020004 Cursor:0000000081000004
+    Cap Tag Write [0000000081000000/1000000] 0 -> 1
+riscv_cpu_do_interrupt: hart:0, async:0, cause:0000000000000003, epc:0x0000000080000030, tval:0x0000000000000000, desc=breakpoint
+
+[1:0] Requested instruction logging @ 0000000000001000 
+[1:0] auipcc          ca0,16777216    # 0x81000000
+    Write c10/ca0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 
+    a:0000000081000000 t:ffffffffffffffff
+[1:0] mv              a0,a0
+  x10/a0 <- 0000000081000000 (setting integer value)
+[1:0] csrrs           a1,mhartid,zero
+  x11/a1 <- 0000000000000001 (setting integer value)
+[1:0] mv              t1,zero
+  x6/t1 <- 0000000000000000 (setting integer value)
+[1:0] beq             a1,t1,6         # 0x80000014
+[1:0] j               32              # 0x80000032
+[1:0] auipcc          ct0,0           # 0x80000032
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 
+    a:0000000080000032 t:ffffffffffffffff
+[1:0] scaddr          ct0,ct0,a0
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 
+    a:0000000081000000 t:ffffffffffffffff
+[1:0] scbdsi          ct0,ct0,16
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000000 
+    a:0000000081000000 t:0000000081000010
+[1:0] gctag           a0,ct1
+  x10/a0 <- 0000000000000000 (setting integer value)
+[1:0] clc             ct1,0(ct0)
+    Cap Memory Read [0000000081000000] = v:1 PESBT:01e3f00004020004 Cursor:0000000081000004
+    Write c6/ct1|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000081000004 
+    a:0000000081000004 t:0000000081000008
+    Cap Tag Read [0000000081000000/1000000] -> 1
+[1:0] gctag           a1,ct1
+  x11/a1 <- 0000000000000001 (setting integer value)
+riscv_cpu_do_interrupt: hart:1, async:0, cause:0000000000000003, epc:0x000000008000004a, tval:0x0000000000000000, desc=breakpoint

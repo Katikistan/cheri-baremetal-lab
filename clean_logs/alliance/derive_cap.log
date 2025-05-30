@@ -1,0 +1,9 @@
+[0:0] auipcc          ct0,0           # 0x80000000
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000000000000 
+    a:0000000080000000 t:ffffffffffffffff
+[0:0] scbdsi          ct0,ct0,8
+    Write c5/ct0|v:1 sdp:f m:0 ap:3f cl:0 ct:0 b:0000000080000000 
+    a:0000000080000000 t:0000000080000008
+[0:0] 0x0000000080000008:  101285b3          gcperm          a1,ct0
+  x11/a1 <- 00000000000703e3 (setting integer value)
+riscv_cpu_do_interrupt: hart:0, async:0, cause:0000000000000003, epc:0x000000008000000c, tval:0x0000000000000000, desc=breakpoint
