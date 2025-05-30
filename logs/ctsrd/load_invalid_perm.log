@@ -42,12 +42,18 @@
 [0:0] 0x0000000080000016:  35ed              addiw           a1,a1,-5
     Write x11/a1 = 000000000000fffb
 [0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x0000000080000018:  1ad282db          candperm        ct0,ct0,a3
-    Write c5/ct0|v:1 s:0 p:00000000 f:0 b:0000000081000000 l:0000000000000001
+[0:0] 0x0000000080000018:  1ab282db          candperm        ct0,ct0,a1
+    Write c5/ct0|v:1 s:0 p:00008ffb f:0 b:0000000081000000 l:0000000000000001
              |o:0000000000000000 t:000000000003ffff
 [0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x000000008000001c:  04100613          addi            a2,zero,65
+[0:0] 0x000000008000001c:  fe02875b          cgetperm        a4,ct0
+    Write x14/a4 = 0000000000008ffb
+[0:0] 0x0000000000000000:  0000              illegal         
+[0:0] 0x0000000080000020:  04100613          addi            a2,zero,65
     Write x12/a2 = 0000000000000041
 [0:0] 0x0000000000000000:  0000              illegal         
-Got CHERI trap Permit_Store Violation caused by register 5
-riscv_cpu_do_interrupt: hart:0, async:0, cause:000000000000001c, epc:0x0000000080000020, tval:0x00000000000000b3, desc=cheri_fault
+[0:0] 0x0000000080000024:  f8c2845b          illegal         
+    Memory Write [0000000081000000] = 41
+[0:0] 0x0000000000000000:  0000              illegal         
+Got CHERI trap Permit_Load Violation caused by register 5
+riscv_cpu_do_interrupt: hart:0, async:0, cause:000000000000001c, epc:0x0000000080000028, tval:0x00000000000000b2, desc=cheri_fault
