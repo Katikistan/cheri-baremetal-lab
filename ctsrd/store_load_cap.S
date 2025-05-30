@@ -1,5 +1,5 @@
 .global _start
-.option .capmode
+.option capmode
 .section .data
 # 2^4 = 16 byte (128 bits)
 .align 4 
