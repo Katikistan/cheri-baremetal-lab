@@ -17,11 +17,14 @@ _start:
     scbndsi  ct0, ct0, 16         
 
     # Copy capability
-    cmv      ct1, ct0   
+    cmv      ct1, ct0  
+     
     # Store at buffer          
     sc       ct1, 0(ct0) 
     # Load from buffer         
     lc       ct2, 0(ct0)
+
     gctag    a0, ct0 
     gctag    a1, ct1
     gctag    a2, ct2 
+    ebreak

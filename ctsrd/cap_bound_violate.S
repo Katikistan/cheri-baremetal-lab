@@ -1,8 +1,6 @@
 .global _start
-.global buffer
+.option capmode
 .section .data
-# 2^4 = 16 byte (128 bits)
-.align 4 
 buffer:
     .space 16  
 .section .text
@@ -14,15 +12,11 @@ _start:
     cspecialrw ct0, pcc, c0   
     # Set ct0 address to buffer  
     csetaddr ct0, ct0, a0  
-    # Too small for storing cap  
-    csetbounds ct0, ct0, 4     
+    #restrict bound to fit 1 char
+    csetbounds ct0, ct0, 1
+    # offset out of bound
+    cincoffsetimm ct0, ct0, 2    
 
-    # Derive a capability to store
-    li       a1, 4        
-    csetoffset ct1, ct0, a1     
-    csetbounds ct1, ct1, 4   
-
-    # Store in buffer              
-    sc.cap  ct1, 0(ct0)
-    # Load from buffer      
-    lc.cap  ct3, 0(ct0)          
+    # Store char 'A'  (should fail) 
+    li       a1, 0x41             
+    sb.cap       a1, 0(ct0)         

@@ -1,10 +1,8 @@
 .global _start
 .option arch, +zcheripurecap
 .section .data
-# 2^4 = 16 byte (128 bits)
-.align 4 
 buffer:
-    .space 16  
+    .space 1 
 .section .text
 _start:
     auipc  ca0, %pcrel_hi(buffer)
@@ -14,13 +12,11 @@ _start:
     auipc    ct0, 0
     # Set ct0 address to buffer
     scaddr   ct0, ct0, a0  
-    # Too small for storing cap
-    scbndsi  ct0, ct0, 4        
-
-    # Derive a capability to store
-    cmv      ct1, ct0
+    #restrict bound to fit 1 char
+    scbndsi  ct0, ct0, 1   
+    # address out of bound
+    caddi ct0, ct0, 2 
     
-    # Store in buffer              
-    sc       ct1, 0(ct0)
-    # Load from buffer      
-    lc       ct3, 0(ct0)          
+    # Store char 'A'  (should fail) 
+    li       a1, 0x41             
+    sb       a1, 0(ct0)         

@@ -1,10 +1,8 @@
 .global _start 
+.option capmode
 .section .data
-# 2^4 = 16 byte (128 bits)
-.align 4 
 buffer:
-    .space 16  
-
+    .space 1  
 .section .text
 _start:
     # Get address of buffer
@@ -14,7 +12,7 @@ _start:
     # Derive capability
     cspecialrw ct0, pcc, c0
     csetaddr   ct0, ct0, a0
-    csetbounds ct0, ct0, 16
+    csetbounds ct0, ct0, 1
     
     # Store char 'A' 
     li         a1, 0x41
@@ -29,7 +27,7 @@ _start:
     # Making print cap
     cspecialrw ct1, pcc, c0
     csetaddr   ct1, ct1, a3
-    csetbounds ct1, ct1, 8
+    csetbounds ct1, ct1, 1
 
     # print loaded char
     sb.cap     a2, 0(ct1)
@@ -43,4 +41,5 @@ _start:
     cgettag    a5, ct1 
     addi       a5, a5, 0x30
     # Print tag bit
-    sb.cap     a5, 0(ct1)            
+    sb.cap     a5, 0(ct1) 
+    ebreak           

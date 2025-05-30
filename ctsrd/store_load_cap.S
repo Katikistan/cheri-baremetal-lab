@@ -1,4 +1,5 @@
 .global _start
+.option .capmode
 .section .data
 # 2^4 = 16 byte (128 bits)
 .align 4 
@@ -21,8 +22,9 @@ _start:
     # restrict bounds   
     csetbounds ct1, ct1, 4    
 
-    sc.cap     ct1, 0(ct0)          
-    lc.cap     ct2, 0(ct0)
+    csc        ct1, 0(ct0)          
+    clc        ct2, 0(ct0)
     cgettag    a0, ct0 
     cgettag    a1, ct1
-    cgettag    a2, ct2              
+    cgettag    a2, ct2 
+    ebreak             
