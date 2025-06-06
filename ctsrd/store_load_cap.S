@@ -19,8 +19,6 @@ _start:
     # Derive a capability to store
     li         a1, 4        
     csetoffset ct1, ct0, a1  
-    # restrict bounds   
-    csetbounds ct1, ct1, 4    
 
     csc        ct1, 0(ct0)          
     clc        ct2, 0(ct0)

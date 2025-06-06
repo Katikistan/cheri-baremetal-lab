@@ -6,6 +6,7 @@ buffer:
 .section .text
 _start:
     # Get address of buffer
+    
     auipcc  ca0, %pcrel_hi(buffer)
     addi    a0, a0, %lo(buffer)
     

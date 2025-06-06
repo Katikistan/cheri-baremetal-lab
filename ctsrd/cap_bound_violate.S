@@ -2,7 +2,7 @@
 .option capmode
 .section .data
 buffer:
-    .space 16  
+    .space 1  
 .section .text
 _start:
     auipcc  ca0, %pcrel_hi(buffer)

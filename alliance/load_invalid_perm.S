@@ -15,7 +15,7 @@ _start:
     scbndsi  ct0, ct0, 1          
     
     # Clear load permissions   
-    li       a1, 0x3b        
+    li       a1, 0x3ffff       
     acperm   ct0, ct0, a1
     
     # ASCII 'A'
