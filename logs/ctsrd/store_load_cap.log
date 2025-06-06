@@ -39,41 +39,38 @@
 [0:0] 0x0000000080000014:  4591              addi            a1,zero,4
     Write x11/a1 = 0000000000000004
 [0:0] 0x0000000000000000:  0000              illegal         
+
 [0:0] 0x0000000080000016:  1eb2835b          csetoffset      ct1,ct0,a1
     Write c6/ct1|v:1 s:0 p:00078fff f:0 b:0000000081000000 l:0000000000000010
              |o:0000000000000004 t:000000000003ffff
 [0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x000000008000001a:  0043235b          csetbounds      ct1,ct1,4
-    Write c6/ct1|v:1 s:0 p:00078fff f:0 b:0000000081000004 l:0000000000000004
-             |o:0000000000000000 t:000000000003ffff
-[0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x000000008000001e:  0062c023          sc              ct1,0(t0)
-    Cap Memory Write [0000000081000000] = v:1 PESBT:ffff000004038000 Cursor:0000000081000004
+[0:0] 0x000000008000001a:  0062c023          sc              ct1,0(t0)
+    Cap Memory Write [0000000081000000] = v:1 PESBT:ffff000004058004 Cursor:0000000081000004
     Cap Tag Write [0000000081000000/1000000] 0 -> 1
 [0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x0000000080000022:  0002a38f          lc              ct2,0(t0)
-    Cap Memory Read [0000000081000000] = v:1 PESBT:ffff000004038000 Cursor:0000000081000004
-    Write c7/ct2|v:1 s:0 p:00078fff f:0 b:0000000081000004 l:0000000000000004
-             |o:0000000000000000 t:000000000003ffff
+[0:0] 0x000000008000001e:  0002a38f          lc              ct2,0(t0)
+    Cap Memory Read [0000000081000000] = v:1 PESBT:ffff000004058004 Cursor:0000000081000004
+    Write c7/ct2|v:1 s:0 p:00078fff f:0 b:0000000081000000 l:0000000000000010
+             |o:0000000000000004 t:000000000003ffff
     Cap Tag Read [0000000081000000/1000000] -> 1
 [0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x0000000080000026:  fe42855b          cgettag         a0,ct0
+[0:0] 0x0000000080000022:  fe42855b          cgettag         a0,ct0
     Write x10/a0 = 0000000000000001
 [0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x000000008000002a:  fe4305db          cgettag         a1,ct1
+[0:0] 0x0000000080000026:  fe4305db          cgettag         a1,ct1
     Write x11/a1 = 0000000000000001
 [0:0] 0x0000000000000000:  0000              illegal         
-[0:0] 0x000000008000002e:  fe43865b          cgettag         a2,ct2
+[0:0] 0x000000008000002a:  fe43865b          cgettag         a2,ct2
     Write x12/a2 = 0000000000000001
 [0:0] 0x0000000000000000:  0000              illegal         
-riscv_cpu_do_interrupt: hart:0, async:0, cause:0000000000000003, epc:0x0000000080000032, tval:0x0000000000000000, desc=breakpoint
-[0:0] 0x0000000080000032:  9002              ebreak          
+riscv_cpu_do_interrupt: hart:0, async:0, cause:0000000000000003, epc:0x000000008000002e, tval:0x0000000000000000, desc=breakpoint
+[0:0] 0x000000008000002e:  9002              ebreak          
 -> Switch to Machine mode
 -> Exception #3 vector 0x0000000000000000 fault-addr 0x0000000000000000
     Write mstatus = 0000000a00001800
     Write mcause = 0000000000000003
     Write MEPCC|v:1 s:0 p:00078fff f:0 b:0000000000000000 l:ffffffffffffffff
-             |o:0000000080000032 t:000000000003ffff
+             |o:000000008000002e t:000000000003ffff
     Write mbadaddr = 0000000000000000
     Write mtval2 = 0000000000000000
     Write PCC|v:1 s:0 p:00078fff f:0 b:0000000000000000 l:ffffffffffffffff
