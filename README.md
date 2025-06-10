@@ -142,4 +142,4 @@ set scheduler-locking on  # Make sure only one thread is running at a time
 * `README`: The file you are currently reading
 * `linker.ld`: Linker script targeting bare-metal memory at `0x80000000`
 * `alliance/*.S`: CHERI-alliance Assembly source files to be tested
-* `cambridge/*.S`: CTSRD Assembly source files to be tested
+* `ctsrd/*.S`: CTSRD Assembly source files to be tested
